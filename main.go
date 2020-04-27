@@ -1,14 +1,13 @@
 package main
 
 import (
-	"fmt"
-
-	"github.com/gin-gonic/gin"
+	router "github.com/Blac-Panda/Stardome-API/routers"
 )
 
 func main() {
-	fmt.Print("Hello World")
 
-	g := gin.Default()
+	app := router.Routers()
+
+	app.Run(":1010")
 
 }
