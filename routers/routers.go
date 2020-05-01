@@ -1,10 +1,12 @@
 package router
 
 import (
+	errormiddleware "github.com/Blac-Panda/Stardome-API/middlewares/error"
 	"github.com/gin-gonic/gin"
 
-	"github.com/Blac-Panda/Stardome-API/controllers/players"
-	"github.com/Blac-Panda/Stardome-API/controllers/tournaments"
+	authenticationcontroller "github.com/Blac-Panda/Stardome-API/controllers/authentication"
+	playercontroller "github.com/Blac-Panda/Stardome-API/controllers/player"
+	tournamentcontroller "github.com/Blac-Panda/Stardome-API/controllers/tournament"
 )
 
 // Routers This  function defines the available routes
@@ -12,23 +14,27 @@ import (
 func Routers() *gin.Engine {
 	g := gin.Default()
 
+	g.Use(errormiddleware.ErrorHandlerMiddleware())
+
 	api := g.Group("/api")
 	{
-		api.GET("/players", players.ListPlayers)
-		api.POST("/players", players.CreatePlayer)
+		api.POST("/auth/token", authenticationcontroller.AuthenticatePlayer)
 
-		api.GET("/players/:id", players.GetPlayer)
-		api.PUT("/players/:id", players.UpdatePlayer)
-		api.PATCH("/players/:id", players.ModifyPlayer)
-		api.DELETE("/players/:id", players.DeletePlayer)
+		api.GET("/players", playercontroller.ListPlayers)
+		api.POST("/players", playercontroller.CreatePlayer)
 
-		api.GET("/tournaments", tournaments.ListTournaments)
-		api.POST("/tournaments", tournaments.CreateTournament)
+		api.GET("/players/:id", playercontroller.GetPlayer)
+		api.PUT("/players/:id", playercontroller.UpdatePlayer)
+		api.PATCH("/players/:id", playercontroller.ModifyPlayer)
+		api.DELETE("/players/:id", playercontroller.DeletePlayer)
 
-		api.GET("/tournaments/:id", tournaments.GetTournament)
-		api.PUT("/tournaments/:id", tournaments.UpdateTournament)
-		api.PATCH("/tournaments/:id", tournaments.ModifyTournament)
-		api.DELETE("/tournaments/:id", tournaments.DeleteTournament)
+		api.GET("/tournaments", tournamentcontroller.ListTournaments)
+		api.POST("/tournaments", tournamentcontroller.CreateTournament)
+
+		api.GET("/tournaments/:id", tournamentcontroller.GetTournament)
+		api.PUT("/tournaments/:id", tournamentcontroller.UpdateTournament)
+		api.PATCH("/tournaments/:id", tournamentcontroller.ModifyTournament)
+		api.DELETE("/tournaments/:id", tournamentcontroller.DeleteTournament)
 	}
 
 	return g
