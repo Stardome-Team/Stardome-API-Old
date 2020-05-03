@@ -27,7 +27,7 @@ func CreatePlayer(c *gin.Context) {
 	var regModel playermodel.PlayerRegistration
 
 	if err := c.ShouldBindJSON(&regModel); err != nil {
-		c.Error(err)
+		c.Error(err).SetType(gin.ErrorTypeBind)
 		c.Status(http.StatusBadRequest)
 		return
 	}

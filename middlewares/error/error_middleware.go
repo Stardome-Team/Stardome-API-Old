@@ -1,6 +1,17 @@
 package errormiddleware
 
 import (
+	"fmt"
+	"net/http"
+
+	"github.com/Blac-Panda/Stardome-API/utils"
+
+	em "github.com/Blac-Panda/Stardome-API/models/error"
+
+	"github.com/stoewer/go-strcase"
+
+	"github.com/go-playground/validator/v10"
+
 	"github.com/gin-gonic/gin"
 )
 
@@ -11,7 +22,85 @@ func ErrorHandlerMiddleware() gin.HandlerFunc {
 		c.Next()
 
 		if len(c.Errors) > 0 {
-			c.AbortWithStatusJSON(c.Writer.Status(), c.Errors)
+			var errorsList []em.ErrorsObject
+
+			for _, e := range c.Errors {
+				switch e.Type {
+				case gin.ErrorTypePublic:
+					errorsList = append(errorsList, PublicErrorToObject(e, c))
+				case gin.ErrorTypeBind:
+					errs := e.Err.(validator.ValidationErrors)
+
+					for _, err := range errs {
+						errorsList = append(errorsList, ValidationErrorToObject(err, c))
+					}
+				default:
+					// Report Error
+				}
+
+			}
+
+			if len(errorsList) != 0 {
+				if !c.Writer.Written() {
+					c.AbortWithStatusJSON(c.Writer.Status(), em.Error{
+						Error: em.ErrorObject{
+							Code:    c.Writer.Status(),
+							Message: errorsList[0].Message,
+							Errors:  errorsList,
+						},
+					})
+				}
+			} else {
+				c.AbortWithStatusJSON(http.StatusInternalServerError, em.Error{
+					Error: em.ErrorObject{
+						Code:    http.StatusInternalServerError,
+						Message: utils.ErrorInternalError,
+						Errors: []em.ErrorsObject{{
+							Domain:  c.Request.URL.Path,
+							Message: utils.ErrorInternalError,
+							Reason:  "InternalServerError",
+						}},
+					},
+				})
+			}
 		}
+	}
+}
+
+// ValidationErrorToObject :
+func ValidationErrorToObject(e validator.FieldError, c *gin.Context) em.ErrorsObject {
+	var field string = strcase.LowerCamelCase(e.Field())
+	var message string
+	switch e.Tag() {
+	case "required":
+		message = fmt.Sprintf("%s is required", field)
+	case "max":
+		message = fmt.Sprintf("%s cannot be longer than %s", field, e.Param())
+	case "min":
+		message = fmt.Sprintf("%s must be longer than %s", field, e.Param())
+	case "email":
+		message = fmt.Sprintf("Invalid email format")
+	case "len":
+		message = fmt.Sprintf("%s must be %s characters long", field, e.Param())
+	}
+
+	if len(message) == 0 {
+		message = fmt.Sprintf("%s is not valid", field)
+	}
+
+	return em.ErrorsObject{
+		Domain:  c.Request.URL.Path,
+		Message: message,
+		Reason:  "FieldValidationError",
+	}
+}
+
+// PublicErrorToObject :
+func PublicErrorToObject(e *gin.Error, c *gin.Context) em.ErrorsObject {
+
+	return em.ErrorsObject{
+		Domain:  c.Request.URL.Path,
+		Message: e.Error(),
+		Reason:  e.Meta.(string),
 	}
 }

@@ -1,5 +1,9 @@
 package playermodel
 
+import (
+	errormodel "github.com/Blac-Panda/Stardome-API/models/error"
+)
+
 // Player :
 type Player struct {
 	ID             int    `json:"id"`
@@ -19,7 +23,18 @@ type PlayerAuthentication struct {
 
 // PlayerRegistration :
 type PlayerRegistration struct {
-	UserName        string `json:"userName,omitempty" binding:"required"`
+	UserName        string `json:"userName,omitempty" binding:"required,min=3,max=25"`
 	Password        string `json:"password" binding:"required"`
 	ConfirmPassword string `json:"confirmPassword" binding:"required"`
+}
+
+// GetErrors :
+func (m *PlayerRegistration) GetErrors() []errormodel.FieldError {
+	var errors []errormodel.FieldError
+
+	if m.UserName == "" {
+
+	}
+
+	return errors
 }

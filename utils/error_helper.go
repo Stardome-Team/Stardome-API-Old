@@ -1,8 +1,6 @@
 package utils
 
-import "github.com/gin-gonic/gin"
-
-// ErrorUtils :
-func ErrorUtils(c *gin.Context, statusCode int, errorObject interface{}) {
-
-}
+var (
+	// ErrorInternalError :
+	ErrorInternalError = "whoops something went wrong"
+)

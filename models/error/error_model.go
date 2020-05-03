@@ -1,5 +1,7 @@
 package errormodel
 
+import "github.com/gin-gonic/gin"
+
 // Error :
 type Error struct {
 	Error ErrorObject `json:"error"`
@@ -19,4 +21,17 @@ type ErrorsObject struct {
 	Message      string `json:"message,omitempty"`
 	ExtendedHelp string `json:"extendedHelp,omitempty"`
 	SendReport   string `json:"sendReport,omitempty"`
+}
+
+// BindingErrorModel :
+type BindingErrorModel struct {
+	Key   string `json:"key"`
+	Error string `json:"error"`
+}
+
+// FieldError :
+type FieldError struct {
+	Type     gin.ErrorType
+	Metadata interface{}
+	Error    error
 }

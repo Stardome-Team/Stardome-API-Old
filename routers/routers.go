@@ -12,7 +12,7 @@ import (
 // Routers This  function defines the available routes
 // in Stardome API
 func Routers() *gin.Engine {
-	g := gin.Default()
+	g := gin.New()
 
 	g.Use(errormiddleware.ErrorHandlerMiddleware())
 
