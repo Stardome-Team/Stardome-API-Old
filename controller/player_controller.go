@@ -1,9 +1,9 @@
-package playercontroller
+package controller
 
 import (
 	"net/http"
 
-	playermodel "github.com/Blac-Panda/Stardome-API/models/player"
+	"github.com/Blac-Panda/Stardome-API/models"
 
 	"github.com/gin-gonic/gin"
 )
@@ -24,7 +24,7 @@ func GetPlayer(c *gin.Context) {
 
 // CreatePlayer :
 func CreatePlayer(c *gin.Context) {
-	var regModel playermodel.PlayerRegistration
+	var regModel models.PlayerRegistration
 
 	if err := c.ShouldBindJSON(&regModel); err != nil {
 		c.Error(err).SetType(gin.ErrorTypeBind)

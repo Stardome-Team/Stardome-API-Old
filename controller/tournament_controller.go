@@ -1,4 +1,4 @@
-package tournamentcontroller
+package controller
 
 import (
 	"net/http"

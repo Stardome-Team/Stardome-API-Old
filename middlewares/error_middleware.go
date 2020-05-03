@@ -1,4 +1,4 @@
-package errormiddleware
+package middlewares
 
 import (
 	"fmt"
@@ -6,7 +6,7 @@ import (
 
 	"github.com/Blac-Panda/Stardome-API/utils"
 
-	em "github.com/Blac-Panda/Stardome-API/models/error"
+	"github.com/Blac-Panda/Stardome-API/models"
 
 	"github.com/stoewer/go-strcase"
 
@@ -22,7 +22,7 @@ func ErrorHandlerMiddleware() gin.HandlerFunc {
 		c.Next()
 
 		if len(c.Errors) > 0 {
-			var errorsList []em.ErrorsObject
+			var errorsList []models.ErrorsObject
 
 			for _, e := range c.Errors {
 				switch e.Type {
@@ -42,8 +42,8 @@ func ErrorHandlerMiddleware() gin.HandlerFunc {
 
 			if len(errorsList) != 0 {
 				if !c.Writer.Written() {
-					c.AbortWithStatusJSON(c.Writer.Status(), em.Error{
-						Error: em.ErrorObject{
+					c.AbortWithStatusJSON(c.Writer.Status(), models.Error{
+						Error: models.ErrorObject{
 							Code:    c.Writer.Status(),
 							Message: errorsList[0].Message,
 							Errors:  errorsList,
@@ -51,11 +51,11 @@ func ErrorHandlerMiddleware() gin.HandlerFunc {
 					})
 				}
 			} else {
-				c.AbortWithStatusJSON(http.StatusInternalServerError, em.Error{
-					Error: em.ErrorObject{
+				c.AbortWithStatusJSON(http.StatusInternalServerError, models.Error{
+					Error: models.ErrorObject{
 						Code:    http.StatusInternalServerError,
 						Message: utils.ErrorInternalError,
-						Errors: []em.ErrorsObject{{
+						Errors: []models.ErrorsObject{{
 							Domain:  c.Request.URL.Path,
 							Message: utils.ErrorInternalError,
 							Reason:  "InternalServerError",
@@ -68,7 +68,7 @@ func ErrorHandlerMiddleware() gin.HandlerFunc {
 }
 
 // ValidationErrorToObject :
-func ValidationErrorToObject(e validator.FieldError, c *gin.Context) em.ErrorsObject {
+func ValidationErrorToObject(e validator.FieldError, c *gin.Context) models.ErrorsObject {
 	var field string = strcase.LowerCamelCase(e.Field())
 	var message string
 	switch e.Tag() {
@@ -88,7 +88,7 @@ func ValidationErrorToObject(e validator.FieldError, c *gin.Context) em.ErrorsOb
 		message = fmt.Sprintf("%s is not valid", field)
 	}
 
-	return em.ErrorsObject{
+	return models.ErrorsObject{
 		Domain:  c.Request.URL.Path,
 		Message: message,
 		Reason:  "FieldValidationError",
@@ -96,9 +96,9 @@ func ValidationErrorToObject(e validator.FieldError, c *gin.Context) em.ErrorsOb
 }
 
 // PublicErrorToObject :
-func PublicErrorToObject(e *gin.Error, c *gin.Context) em.ErrorsObject {
+func PublicErrorToObject(e *gin.Error, c *gin.Context) models.ErrorsObject {
 
-	return em.ErrorsObject{
+	return models.ErrorsObject{
 		Domain:  c.Request.URL.Path,
 		Message: e.Error(),
 		Reason:  e.Meta.(string),
