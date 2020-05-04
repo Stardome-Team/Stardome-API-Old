@@ -1,17 +1,19 @@
 package services
 
 import (
-	"errors"
+	"time"
 
 	"github.com/Blac-Panda/Stardome-API/models"
 	"github.com/Blac-Panda/Stardome-API/repositories"
+	"github.com/Blac-Panda/Stardome-API/utils"
+	"github.com/rs/xid"
 )
 
 // PlayerService :
 type PlayerService interface {
 	ListPlayers()
 	GetPlayer()
-	CreatePlayer() (*models.Player, error)
+	CreatePlayer(pr *models.PlayerRegistration) (*models.Player, error)
 	UpdatePlayer()
 	ModifyPlayer()
 	DeletePlayer()
@@ -33,11 +35,31 @@ func (s *service) ListPlayers() {
 
 func (s *service) GetPlayer() {}
 
-func (s *service) CreatePlayer() (*models.Player, error) {
-	player, err := s.repository.CreatePlayer()
+func (s *service) CreatePlayer(pr *models.PlayerRegistration) (*models.Player, error) {
+
+	guid := xid.New()
+	passwordHash, err := utils.GenerateHashFromPassword(pr.Password)
 
 	if err != nil {
-		return nil, errors.New("Not yet implemented")
+		// TODO: Log Error
+		return nil, err
+	}
+
+	playerID := guid.String()
+	time := time.Now()
+
+	var newPlayer models.Player = models.Player{
+		ID:        &playerID,
+		UserName:  &pr.UserName,
+		PassHash:  &passwordHash,
+		CreatedAt: &time,
+		UpdatedAt: &time,
+	}
+
+	player, err := s.repository.CreatePlayer(&newPlayer)
+
+	if err != nil {
+		return nil, err
 	}
 	return player, nil
 }

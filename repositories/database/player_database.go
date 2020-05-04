@@ -1,20 +1,18 @@
 package database
 
 import (
-	"errors"
-	"fmt"
-
 	"github.com/Blac-Panda/Stardome-API/models"
 	"github.com/Blac-Panda/Stardome-API/repositories"
+	"github.com/Blac-Panda/Stardome-API/utils"
 	"github.com/jinzhu/gorm"
 )
 
 type repo struct {
-	db *gorm.DB
+	db func() *gorm.DB
 }
 
 // NewPlayerRepository :
-func NewPlayerRepository(db *gorm.DB) repositories.PlayerRepository {
+func NewPlayerRepository(db func() *gorm.DB) repositories.PlayerRepository {
 	return &repo{
 		db: db,
 	}
@@ -28,10 +26,25 @@ func (r *repo) GetPlayer() {
 
 }
 
-func (r *repo) CreatePlayer() (*models.Player, error) {
-	fmt.Println("\n\n\n Create Plater Repository \n\n\n.")
+func (r *repo) CreatePlayer(p *models.Player) (*models.Player, error) {
+	var db *gorm.DB = r.db()
+	defer db.Close()
 
-	return nil, errors.New("Not yet implemented")
+	if db == nil {
+		// TODO: Log Errors
+		return nil, utils.ErrorInternalError
+	}
+
+	if !db.First(&models.Player{}, " user_name = ? ", &p.UserName).RecordNotFound() {
+		return nil, utils.ErrorPlayerAlreadyExist
+	}
+
+	if err := db.Create(p).Error; err != nil {
+		// TODO: Log Errors
+		return nil, utils.ErrorPlayerCreationFailed
+	}
+
+	return p, nil
 }
 
 func (r *repo) UpdatePlayer() {

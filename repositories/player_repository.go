@@ -6,7 +6,7 @@ import "github.com/Blac-Panda/Stardome-API/models"
 type PlayerRepository interface {
 	ListPlayers()
 	GetPlayer()
-	CreatePlayer() (*models.Player, error)
+	CreatePlayer(p *models.Player) (*models.Player, error)
 	UpdatePlayer()
 	ModifyPlayer()
 	DeletePlayer()

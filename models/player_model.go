@@ -6,16 +6,16 @@ import (
 
 // Player :
 type Player struct {
-	ID             int       `json:"id" gorm:"column:id"`
-	PlayerID       string    `json:"playerId" gorm:"column:player_id"`
-	UserName       string    `json:"userName" gorm:"column:user_name"`
-	EmailAddress   string    `json:"emailAddress" gorm:"column:email"`
-	DisplayName    string    `json:"displayName" gorm:"column:display_name"`
-	AvatarURL      string    `json:"avatarUrl" gorm:"column:avatar_url"`
-	AvatarBlurHash string    `json:"avatarBlurHash" gorm:"column:avatar_blur_hash"`
-	CreatedAt      time.Time `json:"createdAt" gorm:"column:created_at"`
-	UpdatedAt      time.Time `json:"updatedAt" gorm:"column:updated_at"`
-	DeletedAt      time.Time `json:"deletedAt" gorm:"column:deleted_at"`
+	ID             *string    `json:"id" gorm:"column:id"`
+	UserName       *string    `json:"userName" gorm:"column:user_name"`
+	PassHash       *string    `json:"-" gorm:"pass_hash"`
+	EmailAddress   *string    `json:"emailAddress" gorm:"column:email"`
+	DisplayName    *string    `json:"displayName" gorm:"column:display_name"`
+	AvatarURL      *string    `json:"avatarUrl" gorm:"column:avatar_url"`
+	AvatarBlurHash *string    `json:"avatarBlurHash" gorm:"column:avatar_blur_hash"`
+	CreatedAt      *time.Time `json:"createdAt" gorm:"column:created_at"`
+	UpdatedAt      *time.Time `json:"updatedAt" gorm:"column:updated_at"`
+	DeletedAt      *time.Time `json:"deletedAt" gorm:"column:deleted_at"`
 }
 
 // PlayerAuthentication :

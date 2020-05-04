@@ -1,11 +1,11 @@
 package controllers
 
 import (
-	"fmt"
 	"net/http"
 
 	"github.com/Blac-Panda/Stardome-API/models"
 	"github.com/Blac-Panda/Stardome-API/services"
+	"github.com/Blac-Panda/Stardome-API/utils"
 
 	"github.com/gin-gonic/gin"
 )
@@ -56,11 +56,16 @@ func (h *handler) CreatePlayer(c *gin.Context) {
 		return
 	}
 
-	player, err := h.service.CreatePlayer()
+	if regModel.Password != regModel.ConfirmPassword {
+		c.Error(utils.ErrorPasswordMismatch).SetType(gin.ErrorTypePublic).SetMeta(utils.ErrorPasswordMismatch)
+		c.Status(http.StatusBadRequest)
+		return
+	}
+
+	player, err := h.service.CreatePlayer(&regModel)
 
 	if err != nil {
-		fmt.Printf("\n\n\n %s", err)
-		c.Error(err).SetType(gin.ErrorTypePublic).SetMeta("NotYetImplemented")
+		c.Error(err).SetType(gin.ErrorTypePublic).SetMeta(utils.ReasonEntityCreationFailed)
 		c.Status(http.StatusOK)
 		return
 	}

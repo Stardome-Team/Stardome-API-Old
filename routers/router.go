@@ -1,11 +1,13 @@
-package router
+package routers
 
 import (
+	"github.com/Blac-Panda/Stardome-API/configurations"
 	"github.com/Blac-Panda/Stardome-API/controllers"
 	"github.com/Blac-Panda/Stardome-API/middlewares"
 	"github.com/Blac-Panda/Stardome-API/repositories/database"
 	"github.com/Blac-Panda/Stardome-API/services"
 	"github.com/gin-gonic/gin"
+	"github.com/jinzhu/gorm"
 )
 
 var (
@@ -13,7 +15,16 @@ var (
 )
 
 func init() {
-	playerRepository := database.NewPlayerRepository(nil)
+
+	playerRepository := database.NewPlayerRepository(func() *gorm.DB {
+		db, err := configurations.GetDB()
+
+		if err != nil {
+			return nil
+		}
+
+		return db
+	})
 	playerService := services.NewPlayerService(playerRepository)
 	playerHandler = controllers.InitPlayerController(playerService)
 }
@@ -21,7 +32,7 @@ func init() {
 // Routers This  function defines the available routes
 // in Stardome API
 func Routers() *gin.Engine {
-	g := gin.New()
+	g := gin.Default()
 
 	g.Use(middlewares.ErrorHandlerMiddleware())
 
