@@ -26,15 +26,25 @@ func (r *repo) ListPlayers() ([]*models.Player, error) {
 		return nil, utils.ErrorInternalError
 	}
 
-	var players []*models.Player
+	var players []*models.Player = []*models.Player{}
 
 	db.Find(&players)
 
 	return players, nil
 }
 
-func (r *repo) GetPlayer() {
+func (r *repo) GetPlayer(id string) (*models.Player, error) {
+	var db *gorm.DB = r.db()
 
+	if db == nil {
+		return nil, utils.ErrorInternalError
+	}
+
+	var player *models.Player = &models.Player{}
+
+	db.First(&player)
+
+	return player, nil
 }
 
 func (r *repo) CreatePlayer(p *models.Player) (*models.Player, error) {

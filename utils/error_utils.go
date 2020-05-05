@@ -15,6 +15,8 @@ var (
 	ErrorPlayerCreationFailed = errors.New("Unable to create new player")
 	// ErrorDatabaseOperationFailed :
 	ErrorDatabaseOperationFailed = errors.New("Database operation failed")
+	// ErrorPlayerNotFound :
+	ErrorPlayerNotFound = errors.New("Player not found")
 )
 
 var (
@@ -26,4 +28,6 @@ var (
 	ReasonEntityCreationFailed = "EntityCreationFailed"
 	// ReasonFieldValidationError :
 	ReasonFieldValidationError = "FieldValidationError"
+	// ReasonEntityNotFound :
+	ReasonEntityNotFound = "EntityNotFound"
 )

@@ -46,9 +46,16 @@ func (h *handler) ListPlayers(c *gin.Context) {
 
 // GetPlayer :
 func (h *handler) GetPlayer(c *gin.Context) {
-	c.JSON(http.StatusOK, map[string]interface{}{
-		"Hello": "World",
-	})
+	id := c.Param("id")
+
+	player, err := h.service.GetPlayer(id)
+
+	if err != nil {
+		c.Error(err).SetType(gin.ErrorTypePublic).SetMeta(utils.ReasonEntityNotFound)
+		c.Status(http.StatusNotFound)
+	}
+
+	c.JSON(http.StatusOK, player)
 }
 
 // CreatePlayer :
@@ -62,7 +69,7 @@ func (h *handler) CreatePlayer(c *gin.Context) {
 	}
 
 	if regModel.Password != regModel.ConfirmPassword {
-		c.Error(utils.ErrorPasswordMismatch).SetType(gin.ErrorTypePublic).SetMeta(utils.ErrorPasswordMismatch)
+		c.Error(utils.ErrorPasswordMismatch).SetType(gin.ErrorTypePublic).SetMeta(utils.ReasonPasswordMismatch)
 		c.Status(http.StatusBadRequest)
 		return
 	}
