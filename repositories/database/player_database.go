@@ -18,8 +18,19 @@ func NewPlayerRepository(db func() *gorm.DB) repositories.PlayerRepository {
 	}
 }
 
-func (r *repo) ListPlayers() {
+func (r *repo) ListPlayers() ([]*models.Player, error) {
+	var db *gorm.DB = r.db()
+	defer db.Close()
 
+	if db == nil {
+		return nil, utils.ErrorInternalError
+	}
+
+	var players []*models.Player
+
+	db.Find(&players)
+
+	return players, nil
 }
 
 func (r *repo) GetPlayer() {

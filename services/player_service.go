@@ -11,7 +11,7 @@ import (
 
 // PlayerService :
 type PlayerService interface {
-	ListPlayers()
+	ListPlayers() ([]*models.Player, error)
 	GetPlayer()
 	CreatePlayer(pr *models.PlayerRegistration) (*models.Player, error)
 	UpdatePlayer()
@@ -30,7 +30,14 @@ func NewPlayerService(r repositories.PlayerRepository) PlayerService {
 	}
 }
 
-func (s *service) ListPlayers() {
+func (s *service) ListPlayers() ([]*models.Player, error) {
+	players, err := s.repository.ListPlayers()
+
+	if err != nil {
+		return nil, err
+	}
+
+	return players, nil
 }
 
 func (s *service) GetPlayer() {}

@@ -34,9 +34,14 @@ func InitPlayerController(s services.PlayerService) PlayerController {
 
 // ListPlayers :
 func (h *handler) ListPlayers(c *gin.Context) {
-	c.JSON(http.StatusOK, map[string]interface{}{
-		"Hello": "World",
-	})
+	players, err := h.service.ListPlayers()
+
+	if err != nil {
+		c.Error(err).SetType(gin.ErrorTypePublic).SetMeta(utils.ReasonInternalServer)
+		c.Status(http.StatusInternalServerError)
+	}
+
+	c.JSON(http.StatusOK, players)
 }
 
 // GetPlayer :
