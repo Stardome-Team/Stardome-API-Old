@@ -1,12 +1,13 @@
 package main
 
 import (
-	router "github.com/Blac-Panda/Stardome-API/routers"
+	"github.com/Blac-Panda/Stardome-API/routers"
+	_ "github.com/jinzhu/gorm/dialects/postgres"
 )
 
 func main() {
 
-	app := router.Routers()
+	app := routers.Routers()
 
 	app.Run(":1010")
 

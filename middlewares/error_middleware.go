@@ -54,11 +54,11 @@ func ErrorHandlerMiddleware() gin.HandlerFunc {
 				c.AbortWithStatusJSON(http.StatusInternalServerError, models.Error{
 					Error: models.ErrorObject{
 						Code:    http.StatusInternalServerError,
-						Message: utils.ErrorInternalError,
+						Message: utils.ErrorInternalError.Error(),
 						Errors: []models.ErrorsObject{{
 							Domain:  c.Request.URL.Path,
-							Message: utils.ErrorInternalError,
-							Reason:  "InternalServerError",
+							Message: utils.ErrorInternalError.Error(),
+							Reason:  utils.ReasonInternalServer,
 						}},
 					},
 				})
@@ -91,7 +91,7 @@ func ValidationErrorToObject(e validator.FieldError, c *gin.Context) models.Erro
 	return models.ErrorsObject{
 		Domain:  c.Request.URL.Path,
 		Message: message,
-		Reason:  "FieldValidationError",
+		Reason:  utils.ReasonFieldValidationError,
 	}
 }
 
