@@ -42,24 +42,29 @@ func ErrorHandlerMiddleware() gin.HandlerFunc {
 
 			if len(errorsList) != 0 {
 				if !c.Writer.Written() {
-					c.AbortWithStatusJSON(c.Writer.Status(), models.Error{
-						Error: models.ErrorObject{
-							Code:    c.Writer.Status(),
-							Message: errorsList[0].Message,
-							Errors:  errorsList,
+					c.AbortWithStatusJSON(c.Writer.Status(), models.Result{
+
+						Error: models.Error{
+							Error: &models.ErrorObject{
+								Code:    c.Writer.Status(),
+								Message: errorsList[0].Message,
+								Errors:  errorsList,
+							},
 						},
 					})
 				}
 			} else {
-				c.AbortWithStatusJSON(http.StatusInternalServerError, models.Error{
-					Error: models.ErrorObject{
-						Code:    http.StatusInternalServerError,
-						Message: utils.ErrorInternalError.Error(),
-						Errors: []models.ErrorsObject{{
-							Domain:  c.Request.URL.Path,
+				c.AbortWithStatusJSON(http.StatusInternalServerError, models.Result{
+					Error: models.Error{
+						Error: &models.ErrorObject{
+							Code:    http.StatusInternalServerError,
 							Message: utils.ErrorInternalError.Error(),
-							Reason:  utils.ReasonInternalServer,
-						}},
+							Errors: []models.ErrorsObject{{
+								Domain:  c.Request.URL.Path,
+								Message: utils.ErrorInternalError.Error(),
+								Reason:  utils.ReasonInternalServer,
+							}},
+						},
 					},
 				})
 			}

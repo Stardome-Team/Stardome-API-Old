@@ -34,14 +34,34 @@ func InitPlayerController(s services.PlayerService) PlayerController {
 
 // ListPlayers :
 func (h *handler) ListPlayers(c *gin.Context) {
-	players, err := h.service.ListPlayers()
+
+	qInt, err := utils.ParseQueryToInt(c.Query("index"), c.Query("size"))
 
 	if err != nil {
-		c.Error(err).SetType(gin.ErrorTypePublic).SetMeta(utils.ReasonInternalServer)
-		c.Status(http.StatusInternalServerError)
+		c.Error(err.Error).SetType(err.Type).SetMeta(err.Metadata)
+		c.Status(err.StatusCode)
+		return
 	}
 
-	c.JSON(http.StatusOK, players)
+	players, err := h.service.ListPlayers(qInt[0], qInt[1])
+
+	if err != nil {
+		c.Error(err.Error).SetType(err.Type).SetMeta(err.Metadata)
+		c.Status(err.StatusCode)
+		return
+	}
+
+	c.JSON(http.StatusOK, models.Result{
+		Data: models.Data{
+			Data: &models.DataObject{
+				StartIndex:       *players.StartIndex,
+				ItemsPerPage:     *players.ItemsPerPage,
+				TotalItems:       *players.TotalItems,
+				CurrentItemCount: players.CurrentItemCount,
+				Items:            players.Items,
+			},
+		},
+	})
 }
 
 // GetPlayer :
@@ -51,8 +71,8 @@ func (h *handler) GetPlayer(c *gin.Context) {
 	player, err := h.service.GetPlayer(id)
 
 	if err != nil {
-		c.Error(err).SetType(gin.ErrorTypePublic).SetMeta(utils.ReasonEntityNotFound)
-		c.Status(http.StatusNotFound)
+		c.Error(err.Error).SetType(err.Type).SetMeta(err.Metadata)
+		c.Status(err.StatusCode)
 	}
 
 	c.JSON(http.StatusOK, player)
@@ -77,8 +97,8 @@ func (h *handler) CreatePlayer(c *gin.Context) {
 	player, err := h.service.CreatePlayer(&regModel)
 
 	if err != nil {
-		c.Error(err).SetType(gin.ErrorTypePublic).SetMeta(utils.ReasonEntityCreationFailed)
-		c.Status(http.StatusOK)
+		c.Error(err.Error).SetType(err.Type).SetMeta(err.Metadata)
+		c.Status(err.StatusCode)
 		return
 	}
 

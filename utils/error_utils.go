@@ -17,6 +17,10 @@ var (
 	ErrorDatabaseOperationFailed = errors.New("Database operation failed")
 	// ErrorPlayerNotFound :
 	ErrorPlayerNotFound = errors.New("Player not found")
+	// ErrorEncryptionFailed :
+	ErrorEncryptionFailed = errors.New("Encryption failed")
+	// ErrorInvalidQuery :
+	ErrorInvalidQuery = errors.New("Invalid query parameter")
 )
 
 var (
