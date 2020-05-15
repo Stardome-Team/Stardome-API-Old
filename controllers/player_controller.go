@@ -37,8 +37,8 @@ func (h *handler) ListPlayers(c *gin.Context) {
 	players, err := h.service.ListPlayers()
 
 	if err != nil {
-		c.Error(err).SetType(gin.ErrorTypePublic).SetMeta(utils.ReasonInternalServer)
-		c.Status(http.StatusInternalServerError)
+		c.Error(err.Error).SetType(err.Type).SetMeta(err.Metadata)
+		c.Status(err.StatusCode)
 	}
 
 	c.JSON(http.StatusOK, players)
@@ -51,8 +51,8 @@ func (h *handler) GetPlayer(c *gin.Context) {
 	player, err := h.service.GetPlayer(id)
 
 	if err != nil {
-		c.Error(err).SetType(gin.ErrorTypePublic).SetMeta(utils.ReasonEntityNotFound)
-		c.Status(http.StatusNotFound)
+		c.Error(err.Error).SetType(err.Type).SetMeta(err.Metadata)
+		c.Status(err.StatusCode)
 	}
 
 	c.JSON(http.StatusOK, player)
@@ -77,8 +77,8 @@ func (h *handler) CreatePlayer(c *gin.Context) {
 	player, err := h.service.CreatePlayer(&regModel)
 
 	if err != nil {
-		c.Error(err).SetType(gin.ErrorTypePublic).SetMeta(utils.ReasonEntityCreationFailed)
-		c.Status(http.StatusOK)
+		c.Error(err.Error).SetType(err.Type).SetMeta(err.Metadata)
+		c.Status(err.StatusCode)
 		return
 	}
 

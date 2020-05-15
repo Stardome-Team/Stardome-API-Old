@@ -23,15 +23,10 @@ type ErrorsObject struct {
 	SendReport   string `json:"sendReport,omitempty"`
 }
 
-// BindingErrorModel :
-type BindingErrorModel struct {
-	Key   string `json:"key"`
-	Error string `json:"error"`
-}
-
-// FieldError :
-type FieldError struct {
-	Type     gin.ErrorType
-	Metadata interface{}
-	Error    error
+// ErrorParsing :
+type ErrorParsing struct {
+	Type       gin.ErrorType
+	Metadata   interface{}
+	Error      error
+	StatusCode int
 }
