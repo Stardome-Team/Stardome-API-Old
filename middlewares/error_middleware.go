@@ -45,7 +45,7 @@ func ErrorHandlerMiddleware() gin.HandlerFunc {
 					c.AbortWithStatusJSON(c.Writer.Status(), models.Result{
 
 						Error: models.Error{
-							Error: models.ErrorObject{
+							Error: &models.ErrorObject{
 								Code:    c.Writer.Status(),
 								Message: errorsList[0].Message,
 								Errors:  errorsList,
@@ -56,7 +56,7 @@ func ErrorHandlerMiddleware() gin.HandlerFunc {
 			} else {
 				c.AbortWithStatusJSON(http.StatusInternalServerError, models.Result{
 					Error: models.Error{
-						Error: models.ErrorObject{
+						Error: &models.ErrorObject{
 							Code:    http.StatusInternalServerError,
 							Message: utils.ErrorInternalError.Error(),
 							Errors: []models.ErrorsObject{{

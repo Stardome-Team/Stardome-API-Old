@@ -18,7 +18,7 @@ func NewPlayerRepository(db func() *gorm.DB) repositories.PlayerRepository {
 	}
 }
 
-func (r *repo) ListPlayers() ([]*models.Player, error) {
+func (r *repo) ListPlayers(index, size int) (*models.Pagination, error) {
 	var db *gorm.DB = r.db()
 	defer db.Close()
 
@@ -28,9 +28,17 @@ func (r *repo) ListPlayers() ([]*models.Player, error) {
 
 	var players []*models.Player = []*models.Player{}
 
-	db.Find(&players)
+	var count int = 0
 
-	return players, nil
+	db.Offset((index - 1) * size).Limit(size).Find(&players).Count(&count)
+
+	return &models.Pagination{
+		StartIndex:       &index,
+		ItemsPerPage:     &size,
+		TotalItems:       &count,
+		CurrentItemCount: len(players),
+		Items:            &players,
+	}, nil
 }
 
 func (r *repo) GetPlayer(id string) (*models.Player, error) {

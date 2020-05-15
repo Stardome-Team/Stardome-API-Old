@@ -13,7 +13,7 @@ import (
 
 // PlayerService :
 type PlayerService interface {
-	ListPlayers() ([]*models.Player, *models.ErrorParsing)
+	ListPlayers(index, size int) (*models.Pagination, *models.ErrorParsing)
 	GetPlayer(id string) (*models.Player, *models.ErrorParsing)
 	CreatePlayer(pr *models.PlayerRegistration) (*models.Player, *models.ErrorParsing)
 	UpdatePlayer()
@@ -32,8 +32,8 @@ func NewPlayerService(r repositories.PlayerRepository) PlayerService {
 	}
 }
 
-func (s *service) ListPlayers() ([]*models.Player, *models.ErrorParsing) {
-	players, err := s.repository.ListPlayers()
+func (s *service) ListPlayers(index, size int) (*models.Pagination, *models.ErrorParsing) {
+	players, err := s.repository.ListPlayers(index, size)
 
 	if err != nil {
 		return nil, &models.ErrorParsing{

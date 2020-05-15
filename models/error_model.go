@@ -4,7 +4,7 @@ import "github.com/gin-gonic/gin"
 
 // Error :
 type Error struct {
-	Error ErrorObject `json:"error"`
+	Error *ErrorObject `json:"error,omitempty"`
 }
 
 // ErrorObject :

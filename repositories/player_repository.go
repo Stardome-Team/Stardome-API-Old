@@ -4,7 +4,7 @@ import "github.com/Blac-Panda/Stardome-API/models"
 
 // PlayerRepository :
 type PlayerRepository interface {
-	ListPlayers() ([]*models.Player, error)
+	ListPlayers(index, size int) (*models.Pagination, error)
 	GetPlayer(id string) (*models.Player, error)
 	CreatePlayer(p *models.Player) (*models.Player, error)
 	UpdatePlayer()
