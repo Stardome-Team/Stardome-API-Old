@@ -75,7 +75,13 @@ func (h *handler) GetPlayer(c *gin.Context) {
 		c.Status(err.StatusCode)
 	}
 
-	c.JSON(http.StatusOK, player)
+	c.JSON(http.StatusOK, models.Result{
+		Data: models.Data{
+			Data: &models.DataObject{
+				Player: player,
+			},
+		},
+	})
 }
 
 // CreatePlayer :

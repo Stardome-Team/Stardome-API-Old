@@ -29,4 +29,5 @@ type DataObject struct {
 	Edit             interface{} `json:"edit,omitempty"`
 	EditLink         string      `json:"editLink,omitempty"`
 	Items            interface{} `json:"items,omitempty"`
+	*Player          `json:",omitempty"`
 }

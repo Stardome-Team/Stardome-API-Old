@@ -50,7 +50,7 @@ func (r *repo) GetPlayer(id string) (*models.Player, error) {
 
 	var player *models.Player = &models.Player{}
 
-	db.First(&player)
+	db.Where("id = ?", id).First(&player)
 
 	return player, nil
 }
@@ -73,7 +73,11 @@ func (r *repo) CreatePlayer(p *models.Player) (*models.Player, error) {
 		return nil, utils.ErrorPlayerCreationFailed
 	}
 
-	return p, nil
+	var player *models.Player = &models.Player{}
+
+	db.Where("id = ?", p.ID).First(&player)
+
+	return player, nil
 }
 
 func (r *repo) UpdatePlayer() {
