@@ -3,9 +3,11 @@
         "Blac",
         "dbname",
         "etag",
+        "fatih",
         "gonic",
         "gorm",
         "jinzhu",
-        "stoewer"
+        "stoewer",
+        "structs"
     ]
 }

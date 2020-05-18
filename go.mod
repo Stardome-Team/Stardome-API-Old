@@ -4,6 +4,7 @@ go 1.14
 
 require (
 	github.com/alexedwards/argon2id v0.0.0-20200420065805-90c52fcb498a
+	github.com/fatih/structs v1.1.0
 	github.com/fsnotify/fsnotify v1.4.9 // indirect
 	github.com/gin-gonic/gin v1.6.2
 	github.com/go-playground/validator/v10 v10.2.0

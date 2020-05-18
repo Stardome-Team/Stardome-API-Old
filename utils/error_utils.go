@@ -21,6 +21,10 @@ var (
 	ErrorEncryptionFailed = errors.New("Encryption failed")
 	// ErrorInvalidQuery :
 	ErrorInvalidQuery = errors.New("Invalid query parameter")
+	// ErrorRequestIDMismatch :
+	ErrorRequestIDMismatch = errors.New("Request ID do not match")
+	// ErrorPlayerUpdateFailed :
+	ErrorPlayerUpdateFailed = errors.New("Unable to update player")
 )
 
 var (
@@ -34,4 +38,6 @@ var (
 	ReasonFieldValidationError = "FieldValidationError"
 	// ReasonEntityNotFound :
 	ReasonEntityNotFound = "EntityNotFound"
+	// ReasonIDMismatch :
+	ReasonIDMismatch = "IDMismatch"
 )

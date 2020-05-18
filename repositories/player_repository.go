@@ -7,7 +7,7 @@ type PlayerRepository interface {
 	ListPlayers(index, size int) (*models.Pagination, error)
 	GetPlayer(id string) (*models.Player, error)
 	CreatePlayer(p *models.Player) (*models.Player, error)
-	UpdatePlayer()
+	UpdatePlayer(p *models.Player) (*models.Player, error)
 	ModifyPlayer()
 	DeletePlayer()
 }
