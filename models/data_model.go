@@ -10,9 +10,6 @@ type DataObject struct {
 	Kind             string      `json:"kind,omitempty"`
 	Fields           string      `json:"fields,omitempty"`
 	ETag             string      `json:"etag,omitempty"`
-	ID               string      `json:"id,omitempty"`
-	Update           string      `json:"update,omitempty"`
-	Deleted          bool        `json:"delete,omitempty"`
 	CurrentItemCount int         `json:"currentItemCount,omitempty"`
 	ItemsPerPage     int         `json:"itemPerPage,omitempty"`
 	StartIndex       int         `json:"startIndex,omitempty"`
@@ -29,4 +26,5 @@ type DataObject struct {
 	Edit             interface{} `json:"edit,omitempty"`
 	EditLink         string      `json:"editLink,omitempty"`
 	Items            interface{} `json:"items,omitempty"`
+	*Player          `json:",omitempty"`
 }

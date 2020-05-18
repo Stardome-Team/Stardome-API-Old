@@ -73,9 +73,16 @@ func (h *handler) GetPlayer(c *gin.Context) {
 	if err != nil {
 		c.Error(err.Error).SetType(err.Type).SetMeta(err.Metadata)
 		c.Status(err.StatusCode)
+		return
 	}
 
-	c.JSON(http.StatusOK, player)
+	c.JSON(http.StatusOK, models.Result{
+		Data: models.Data{
+			Data: &models.DataObject{
+				Player: player,
+			},
+		},
+	})
 }
 
 // CreatePlayer :
@@ -102,13 +109,41 @@ func (h *handler) CreatePlayer(c *gin.Context) {
 		return
 	}
 
-	c.JSON(http.StatusCreated, player)
+	c.JSON(http.StatusCreated, models.Result{
+		Data: models.Data{
+			Data: &models.DataObject{
+				Player: player,
+			},
+		},
+	})
 }
 
 // UpdatePlayer :
 func (h *handler) UpdatePlayer(c *gin.Context) {
-	c.JSON(http.StatusOK, map[string]interface{}{
-		"Hello": "World",
+	id := c.Param("id")
+
+	var playerModel models.Player
+
+	if err := c.ShouldBindJSON(&playerModel); err != nil {
+		c.Error(err).SetType(gin.ErrorTypeBind)
+		c.Status(http.StatusBadRequest)
+		return
+	}
+
+	player, err := h.service.UpdatePlayer(id, &playerModel)
+
+	if err != nil {
+		c.Error(err.Error).SetType(err.Type).SetMeta(err.Metadata)
+		c.Status(err.StatusCode)
+		return
+	}
+
+	c.JSON(http.StatusOK, models.Result{
+		Data: models.Data{
+			Data: &models.DataObject{
+				Player: player,
+			},
+		},
 	})
 }
 

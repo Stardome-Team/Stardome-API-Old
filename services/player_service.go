@@ -16,7 +16,7 @@ type PlayerService interface {
 	ListPlayers(index, size int) (*models.Pagination, *models.ErrorParsing)
 	GetPlayer(id string) (*models.Player, *models.ErrorParsing)
 	CreatePlayer(pr *models.PlayerRegistration) (*models.Player, *models.ErrorParsing)
-	UpdatePlayer()
+	UpdatePlayer(id string, player *models.Player) (*models.Player, *models.ErrorParsing)
 	ModifyPlayer()
 	DeletePlayer()
 }
@@ -101,7 +101,30 @@ func (s *service) CreatePlayer(pr *models.PlayerRegistration) (*models.Player, *
 	return player, nil
 }
 
-func (s *service) UpdatePlayer() {}
+func (s *service) UpdatePlayer(id string, player *models.Player) (*models.Player, *models.ErrorParsing) {
+
+	if id != *player.ID {
+		return nil, &models.ErrorParsing{
+			Error:      utils.ErrorRequestIDMismatch,
+			Type:       gin.ErrorTypePublic,
+			Metadata:   utils.ReasonIDMismatch,
+			StatusCode: http.StatusBadRequest,
+		}
+	}
+
+	player, err := s.repository.UpdatePlayer(player)
+
+	if err != nil {
+		return nil, &models.ErrorParsing{
+			Error:      err,
+			Type:       gin.ErrorTypePublic,
+			Metadata:   http.StatusText(http.StatusNotFound),
+			StatusCode: http.StatusNotFound,
+		}
+	}
+
+	return player, nil
+}
 
 func (s *service) ModifyPlayer() {}
 

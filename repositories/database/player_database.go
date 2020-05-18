@@ -4,6 +4,7 @@ import (
 	"github.com/Blac-Panda/Stardome-API/models"
 	"github.com/Blac-Panda/Stardome-API/repositories"
 	"github.com/Blac-Panda/Stardome-API/utils"
+	"github.com/fatih/structs"
 	"github.com/jinzhu/gorm"
 )
 
@@ -50,7 +51,7 @@ func (r *repo) GetPlayer(id string) (*models.Player, error) {
 
 	var player *models.Player = &models.Player{}
 
-	db.First(&player)
+	db.Where("id = ?", id).First(&player)
 
 	return player, nil
 }
@@ -73,11 +74,38 @@ func (r *repo) CreatePlayer(p *models.Player) (*models.Player, error) {
 		return nil, utils.ErrorPlayerCreationFailed
 	}
 
-	return p, nil
+	var player *models.Player = &models.Player{}
+
+	db.Where("id = ?", p.ID).First(&player)
+
+	return player, nil
 }
 
-func (r *repo) UpdatePlayer() {
+func (r *repo) UpdatePlayer(p *models.Player) (*models.Player, error) {
+	var db *gorm.DB = r.db()
+	defer db.Close()
 
+	if db == nil {
+		// TODO: Log Errors
+		return nil, utils.ErrorInternalError
+	}
+
+	if db.First(&models.Player{}, " id = ? ", &p.ID).RecordNotFound() {
+		// TODO: Log Errors
+		return nil, utils.ErrorPlayerNotFound
+	}
+
+	mp := structs.New(p)
+
+	if rows := db.Model(&models.Player{}).Updates(mp.Map()).RowsAffected; rows == 0 {
+		return nil, utils.ErrorPlayerUpdateFailed
+	}
+
+	var player *models.Player = &models.Player{}
+
+	db.Where("id = ?", p.ID).First(&player)
+
+	return player, nil
 }
 
 func (r *repo) ModifyPlayer() {
