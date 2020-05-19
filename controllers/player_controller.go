@@ -149,8 +149,30 @@ func (h *handler) UpdatePlayer(c *gin.Context) {
 
 // ModifyPlayer :
 func (h *handler) ModifyPlayer(c *gin.Context) {
-	c.JSON(http.StatusOK, map[string]interface{}{
-		"Hello": "World",
+	id := c.Param("id")
+
+	var playerModel map[string]interface{} = make(map[string]interface{})
+
+	if err := c.ShouldBindJSON(&playerModel); err != nil {
+		c.Error(err).SetType(gin.ErrorTypeBind)
+		c.Status(http.StatusBadRequest)
+		return
+	}
+
+	player, err := h.service.ModifyPlayer(id, playerModel)
+
+	if err != nil {
+		c.Error(err.Error).SetType(err.Type).SetMeta(err.Metadata)
+		c.Status(err.StatusCode)
+		return
+	}
+
+	c.JSON(http.StatusOK, models.Result{
+		Data: models.Data{
+			Data: &models.DataObject{
+				Player: player,
+			},
+		},
 	})
 }
 
