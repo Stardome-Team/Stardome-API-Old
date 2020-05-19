@@ -25,6 +25,8 @@ var (
 	ErrorRequestIDMismatch = errors.New("Request ID do not match")
 	// ErrorPlayerUpdateFailed :
 	ErrorPlayerUpdateFailed = errors.New("Unable to update player")
+	// ErrorPlayerDeleteFailed :
+	ErrorPlayerDeleteFailed = errors.New("Unable to delete player")
 )
 
 var (
@@ -40,4 +42,6 @@ var (
 	ReasonEntityNotFound = "EntityNotFound"
 	// ReasonIDMismatch :
 	ReasonIDMismatch = "IDMismatch"
+	// ReasonEntityDeletionFailed
+	ReasonEntityDeletionFailed = "EntityDeletionFailed"
 )

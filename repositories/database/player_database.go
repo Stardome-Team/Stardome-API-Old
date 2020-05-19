@@ -108,10 +108,48 @@ func (r *repo) UpdatePlayer(p *models.Player) (*models.Player, error) {
 	return player, nil
 }
 
-func (r *repo) ModifyPlayer() {
+func (r *repo) ModifyPlayer(id string, p map[string]interface{}) (*models.Player, error) {
+	var db *gorm.DB = r.db()
+	defer db.Close()
 
+	if db == nil {
+		// TODO: Log Errors
+		return nil, utils.ErrorInternalError
+	}
+
+	if db.First(&models.Player{}, " id = ? ", id).RecordNotFound() {
+		// TODO: Log Errors
+		return nil, utils.ErrorPlayerNotFound
+	}
+
+	if rows := db.Model(&models.Player{}).Omit("id", "user_name", "created_at").Updates(p).RowsAffected; rows == 0 {
+		return nil, utils.ErrorPlayerUpdateFailed
+	}
+
+	var player *models.Player = &models.Player{}
+
+	db.Where("id = ?", id).First(&player)
+
+	return player, nil
 }
 
-func (r *repo) DeletePlayer() {
+func (r *repo) DeletePlayer(id string) error {
+	var db *gorm.DB = r.db()
+	defer db.Close()
 
+	if db == nil {
+		// TODO: Log Errors
+		return utils.ErrorInternalError
+	}
+
+	if db.First(&models.Player{}, " id = ? ", id).RecordNotFound() {
+		// TODO: Log Errors
+		return utils.ErrorPlayerNotFound
+	}
+
+	if rows := db.Where("id = ?", id).Delete(&models.Player{}).RowsAffected; rows == 0 {
+		return utils.ErrorPlayerDeleteFailed
+	}
+
+	return nil
 }

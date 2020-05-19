@@ -8,6 +8,6 @@ type PlayerRepository interface {
 	GetPlayer(id string) (*models.Player, error)
 	CreatePlayer(p *models.Player) (*models.Player, error)
 	UpdatePlayer(p *models.Player) (*models.Player, error)
-	ModifyPlayer()
-	DeletePlayer()
+	ModifyPlayer(id string, p map[string]interface{}) (*models.Player, error)
+	DeletePlayer(id string) error
 }

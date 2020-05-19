@@ -17,8 +17,8 @@ type PlayerService interface {
 	GetPlayer(id string) (*models.Player, *models.ErrorParsing)
 	CreatePlayer(pr *models.PlayerRegistration) (*models.Player, *models.ErrorParsing)
 	UpdatePlayer(id string, player *models.Player) (*models.Player, *models.ErrorParsing)
-	ModifyPlayer()
-	DeletePlayer()
+	ModifyPlayer(id string, player map[string]interface{}) (*models.Player, *models.ErrorParsing)
+	DeletePlayer(id string) *models.ErrorParsing
 }
 
 type service struct {
@@ -126,6 +126,33 @@ func (s *service) UpdatePlayer(id string, player *models.Player) (*models.Player
 	return player, nil
 }
 
-func (s *service) ModifyPlayer() {}
+func (s *service) ModifyPlayer(id string, p map[string]interface{}) (*models.Player, *models.ErrorParsing) {
 
-func (s *service) DeletePlayer() {}
+	player, err := s.repository.ModifyPlayer(id, p)
+
+	if err != nil {
+		return nil, &models.ErrorParsing{
+			Error:      err,
+			Type:       gin.ErrorTypePublic,
+			Metadata:   http.StatusText(http.StatusNotFound),
+			StatusCode: http.StatusNotFound,
+		}
+	}
+
+	return player, nil
+}
+
+func (s *service) DeletePlayer(id string) *models.ErrorParsing {
+
+	err := s.repository.DeletePlayer(id)
+
+	if err != nil {
+		return &models.ErrorParsing{
+			Error:      err,
+			Type:       gin.ErrorTypePublic,
+			Metadata:   utils.ReasonEntityDeletionFailed,
+			StatusCode: http.StatusBadRequest,
+		}
+	}
+	return nil
+}
