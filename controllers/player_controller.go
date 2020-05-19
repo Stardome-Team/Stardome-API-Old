@@ -178,7 +178,15 @@ func (h *handler) ModifyPlayer(c *gin.Context) {
 
 // DeletePlayer :
 func (h *handler) DeletePlayer(c *gin.Context) {
-	c.JSON(http.StatusOK, map[string]interface{}{
-		"Hello": "World",
-	})
+	id := c.Param("id")
+
+	err := h.service.DeletePlayer(id)
+
+	if err != nil {
+		c.Error(err.Error).SetType(err.Type).SetMeta(err.Metadata)
+		c.Status(err.StatusCode)
+		return
+	}
+
+	c.Status(http.StatusOK)
 }

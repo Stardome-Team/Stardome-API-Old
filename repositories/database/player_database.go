@@ -110,6 +110,7 @@ func (r *repo) UpdatePlayer(p *models.Player) (*models.Player, error) {
 
 func (r *repo) ModifyPlayer(id string, p map[string]interface{}) (*models.Player, error) {
 	var db *gorm.DB = r.db()
+	defer db.Close()
 
 	if db == nil {
 		// TODO: Log Errors
@@ -132,6 +133,23 @@ func (r *repo) ModifyPlayer(id string, p map[string]interface{}) (*models.Player
 	return player, nil
 }
 
-func (r *repo) DeletePlayer() {
+func (r *repo) DeletePlayer(id string) error {
+	var db *gorm.DB = r.db()
+	defer db.Close()
 
+	if db == nil {
+		// TODO: Log Errors
+		return utils.ErrorInternalError
+	}
+
+	if db.First(&models.Player{}, " id = ? ", id).RecordNotFound() {
+		// TODO: Log Errors
+		return utils.ErrorPlayerNotFound
+	}
+
+	if rows := db.Where("id = ?", id).Delete(&models.Player{}).RowsAffected; rows == 0 {
+		return utils.ErrorPlayerDeleteFailed
+	}
+
+	return nil
 }
