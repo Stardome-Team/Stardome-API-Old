@@ -15,25 +15,22 @@ import (
 type PlayerService interface {
 	ListPlayers(index, size int) (*models.Pagination, *models.ErrorParsing)
 	GetPlayer(id string) (*models.Player, *models.ErrorParsing)
+	GetPlayerByUserName(username string) (*models.Player, *models.ErrorParsing)
 	CreatePlayer(pr *models.PlayerRegistration) (*models.Player, *models.ErrorParsing)
 	UpdatePlayer(id string, player *models.Player) (*models.Player, *models.ErrorParsing)
 	ModifyPlayer(id string, player map[string]interface{}) (*models.Player, *models.ErrorParsing)
 	DeletePlayer(id string) *models.ErrorParsing
 }
 
-type service struct {
-	repository repositories.PlayerRepository
-}
-
 // NewPlayerService :
-func NewPlayerService(r repositories.PlayerRepository) PlayerService {
+func NewPlayerService(pr repositories.PlayerRepository) PlayerService {
 	return &service{
-		repository: r,
+		playerRepository: pr,
 	}
 }
 
 func (s *service) ListPlayers(index, size int) (*models.Pagination, *models.ErrorParsing) {
-	players, err := s.repository.ListPlayers(index, size)
+	players, err := s.playerRepository.ListPlayers(index, size)
 
 	if err != nil {
 		return nil, &models.ErrorParsing{
@@ -48,7 +45,22 @@ func (s *service) ListPlayers(index, size int) (*models.Pagination, *models.Erro
 }
 
 func (s *service) GetPlayer(id string) (*models.Player, *models.ErrorParsing) {
-	player, err := s.repository.GetPlayer(id)
+	player, err := s.playerRepository.GetPlayer(id)
+
+	if err != nil {
+		return nil, &models.ErrorParsing{
+			Error:      err,
+			Type:       gin.ErrorTypePublic,
+			Metadata:   http.StatusText(http.StatusNotFound),
+			StatusCode: http.StatusNotFound,
+		}
+	}
+
+	return player, nil
+}
+
+func (s *service) GetPlayerByUserName(username string) (*models.Player, *models.ErrorParsing) {
+	player, err := s.playerRepository.GetPlayerByUserName(username)
 
 	if err != nil {
 		return nil, &models.ErrorParsing{
@@ -88,7 +100,7 @@ func (s *service) CreatePlayer(pr *models.PlayerRegistration) (*models.Player, *
 		UpdatedAt: &time,
 	}
 
-	player, err := s.repository.CreatePlayer(&newPlayer)
+	player, err := s.playerRepository.CreatePlayer(&newPlayer)
 
 	if err != nil {
 		return nil, &models.ErrorParsing{
@@ -112,7 +124,7 @@ func (s *service) UpdatePlayer(id string, player *models.Player) (*models.Player
 		}
 	}
 
-	player, err := s.repository.UpdatePlayer(player)
+	player, err := s.playerRepository.UpdatePlayer(player)
 
 	if err != nil {
 		return nil, &models.ErrorParsing{
@@ -128,7 +140,7 @@ func (s *service) UpdatePlayer(id string, player *models.Player) (*models.Player
 
 func (s *service) ModifyPlayer(id string, p map[string]interface{}) (*models.Player, *models.ErrorParsing) {
 
-	player, err := s.repository.ModifyPlayer(id, p)
+	player, err := s.playerRepository.ModifyPlayer(id, p)
 
 	if err != nil {
 		return nil, &models.ErrorParsing{
@@ -144,7 +156,7 @@ func (s *service) ModifyPlayer(id string, p map[string]interface{}) (*models.Pla
 
 func (s *service) DeletePlayer(id string) *models.ErrorParsing {
 
-	err := s.repository.DeletePlayer(id)
+	err := s.playerRepository.DeletePlayer(id)
 
 	if err != nil {
 		return &models.ErrorParsing{

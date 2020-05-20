@@ -11,7 +11,8 @@ import (
 )
 
 var (
-	playerHandler controllers.PlayerController
+	authenticationHandler controllers.AuthenticationController
+	playerHandler         controllers.PlayerController
 )
 
 func init() {
@@ -25,8 +26,11 @@ func init() {
 
 		return db
 	})
+
 	playerService := services.NewPlayerService(playerRepository)
+
 	playerHandler = controllers.InitPlayerController(playerService)
+	authenticationHandler = controllers.InitAuthenticationController(playerService)
 }
 
 // Routers This  function defines the available routes
@@ -38,7 +42,7 @@ func Routers() *gin.Engine {
 
 	api := g.Group("/api")
 	{
-		api.POST("/auth/token", controllers.AuthenticatePlayer)
+		api.POST("/auth/token", authenticationHandler.AuthenticatePlayer)
 
 		api.GET("/players", playerHandler.ListPlayers)
 		api.POST("/players", playerHandler.CreatePlayer)

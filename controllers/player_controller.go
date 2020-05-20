@@ -20,15 +20,10 @@ type PlayerController interface {
 	DeletePlayer(c *gin.Context)
 }
 
-// handler :
-type handler struct {
-	service services.PlayerService
-}
-
 // InitPlayerController :
-func InitPlayerController(s services.PlayerService) PlayerController {
+func InitPlayerController(playerService services.PlayerService) PlayerController {
 	return &handler{
-		service: s,
+		playerService: playerService,
 	}
 }
 
@@ -43,7 +38,7 @@ func (h *handler) ListPlayers(c *gin.Context) {
 		return
 	}
 
-	players, err := h.service.ListPlayers(qInt[0], qInt[1])
+	players, err := h.playerService.ListPlayers(qInt[0], qInt[1])
 
 	if err != nil {
 		c.Error(err.Error).SetType(err.Type).SetMeta(err.Metadata)
@@ -68,7 +63,7 @@ func (h *handler) ListPlayers(c *gin.Context) {
 func (h *handler) GetPlayer(c *gin.Context) {
 	id := c.Param("id")
 
-	player, err := h.service.GetPlayer(id)
+	player, err := h.playerService.GetPlayer(id)
 
 	if err != nil {
 		c.Error(err.Error).SetType(err.Type).SetMeta(err.Metadata)
@@ -101,7 +96,7 @@ func (h *handler) CreatePlayer(c *gin.Context) {
 		return
 	}
 
-	player, err := h.service.CreatePlayer(&regModel)
+	player, err := h.playerService.CreatePlayer(&regModel)
 
 	if err != nil {
 		c.Error(err.Error).SetType(err.Type).SetMeta(err.Metadata)
@@ -130,7 +125,7 @@ func (h *handler) UpdatePlayer(c *gin.Context) {
 		return
 	}
 
-	player, err := h.service.UpdatePlayer(id, &playerModel)
+	player, err := h.playerService.UpdatePlayer(id, &playerModel)
 
 	if err != nil {
 		c.Error(err.Error).SetType(err.Type).SetMeta(err.Metadata)
@@ -159,7 +154,7 @@ func (h *handler) ModifyPlayer(c *gin.Context) {
 		return
 	}
 
-	player, err := h.service.ModifyPlayer(id, playerModel)
+	player, err := h.playerService.ModifyPlayer(id, playerModel)
 
 	if err != nil {
 		c.Error(err.Error).SetType(err.Type).SetMeta(err.Metadata)
@@ -180,7 +175,7 @@ func (h *handler) ModifyPlayer(c *gin.Context) {
 func (h *handler) DeletePlayer(c *gin.Context) {
 	id := c.Param("id")
 
-	err := h.service.DeletePlayer(id)
+	err := h.playerService.DeletePlayer(id)
 
 	if err != nil {
 		c.Error(err.Error).SetType(err.Type).SetMeta(err.Metadata)

@@ -5,8 +5,8 @@ import (
 )
 
 // GenerateHashFromPassword :
-func GenerateHashFromPassword(password string) (string, error) {
-	hash, err := argon2id.CreateHash(password, argon2id.DefaultParams)
+func GenerateHashFromPassword(password string) (hash string, err error) {
+	hash, err = argon2id.CreateHash(password, argon2id.DefaultParams)
 
 	if err != nil {
 		// TODO: Log Error
