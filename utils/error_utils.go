@@ -27,6 +27,8 @@ var (
 	ErrorPlayerUpdateFailed = errors.New("Unable to update player")
 	// ErrorPlayerDeleteFailed :
 	ErrorPlayerDeleteFailed = errors.New("Unable to delete player")
+	// ErrorAuthenticationFailed :
+	ErrorAuthenticationFailed = errors.New("Username or Password not valid")
 )
 
 var (

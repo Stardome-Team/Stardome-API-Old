@@ -7,4 +7,5 @@ import (
 // handler :
 type handler struct {
 	playerService services.PlayerService
+	authService   services.AuthenticationService
 }

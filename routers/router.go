@@ -28,9 +28,10 @@ func init() {
 	})
 
 	playerService := services.NewPlayerService(playerRepository)
+	authenticationService := services.NewAuthenticationService(playerRepository)
 
 	playerHandler = controllers.InitPlayerController(playerService)
-	authenticationHandler = controllers.InitAuthenticationController(playerService)
+	authenticationHandler = controllers.InitAuthenticationController(authenticationService)
 }
 
 // Routers This  function defines the available routes

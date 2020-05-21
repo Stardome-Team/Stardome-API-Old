@@ -8,3 +8,10 @@ type Pagination struct {
 	CurrentItemCount int
 	Items            interface{}
 }
+
+// Token ;
+type Token struct {
+	Token     *string `json:"token"`
+	ExpiresOn int64   `json:"expiresOn"`
+	Type      string  `json:"type"`
+}

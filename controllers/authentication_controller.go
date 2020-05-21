@@ -1,7 +1,6 @@
 package controllers
 
 import (
-	"fmt"
 	"net/http"
 
 	"github.com/Blac-Panda/Stardome-API/models"
@@ -15,9 +14,9 @@ type AuthenticationController interface {
 }
 
 // InitAuthenticationController :
-func InitAuthenticationController(playerService services.PlayerService) AuthenticationController {
+func InitAuthenticationController(as services.AuthenticationService) AuthenticationController {
 	return &handler{
-		playerService: playerService,
+		authService: as,
 	}
 }
 
@@ -31,17 +30,16 @@ func (h *handler) AuthenticatePlayer(c *gin.Context) {
 		return
 	}
 
-	player, parsingErr := h.playerService.GetPlayerByUserName(authModel.UserName)
+	token, err := h.authService.AuthenticatePlayer(c, &authModel)
 
-	if parsingErr != nil {
-		c.Error(parsingErr.Error).SetType(parsingErr.Type).SetMeta(parsingErr.Metadata)
-		c.Status(parsingErr.StatusCode)
+	if err != nil {
+		c.Error(err.Error).SetType(err.Type).SetMeta(err.Metadata)
+		c.Status(err.StatusCode)
 		return
 	}
 
-	// match, err := utils.CompareHashWithPassword(authModel.Password, *player.PassHash)
-
-	// if err != nil
-
-	fmt.Print(player)
+	c.JSON(
+		http.StatusCreated,
+		token,
+	)
 }
