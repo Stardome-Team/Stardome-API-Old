@@ -51,7 +51,29 @@ func (r *repo) GetPlayer(id string) (*models.Player, error) {
 
 	var player *models.Player = &models.Player{}
 
-	db.Where("id = ?", id).First(&player)
+	var count int = 0
+
+	if db.Where("id = ?", id).First(&player).Count(&count); count == 0 {
+		return nil, utils.ErrorPlayerNotFound
+	}
+
+	return player, nil
+}
+
+func (r *repo) GetPlayerByUserName(username string) (*models.Player, error) {
+	var db *gorm.DB = r.db()
+
+	if db == nil {
+		return nil, utils.ErrorInternalError
+	}
+
+	var player *models.Player = &models.Player{}
+
+	var count int = 0
+
+	if db.Where("user_name = ?", username).First(&player).Count(&count); count == 0 {
+		return nil, utils.ErrorPlayerNotFound
+	}
 
 	return player, nil
 }
