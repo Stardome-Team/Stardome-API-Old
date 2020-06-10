@@ -29,6 +29,10 @@ var (
 	ErrorPlayerDeleteFailed = errors.New("Unable to delete player")
 	// ErrorAuthenticationFailed :
 	ErrorAuthenticationFailed = errors.New("Username or Password not valid")
+	// ErrorAuthorizationTokenNotFound :
+	ErrorAuthorizationTokenNotFound = errors.New("Player authorization not found")
+	// ErrorAuthorizationVerificationFailed :
+	ErrorAuthorizationVerificationFailed = errors.New("Authorization failed")
 )
 
 var (
@@ -44,6 +48,8 @@ var (
 	ReasonEntityNotFound = "EntityNotFound"
 	// ReasonIDMismatch :
 	ReasonIDMismatch = "IDMismatch"
-	// ReasonEntityDeletionFailed
+	// ReasonEntityDeletionFailed :
 	ReasonEntityDeletionFailed = "EntityDeletionFailed"
+	// ReasonAuthorizationFailed :
+	ReasonAuthorizationFailed = "AuthorizationFailed"
 )

@@ -44,22 +44,25 @@ func Routers() *gin.Engine {
 	api := g.Group("/api")
 	{
 		api.POST("/auth/token", authenticationHandler.AuthenticatePlayer)
-
-		api.GET("/players", playerHandler.ListPlayers)
 		api.POST("/players", playerHandler.CreatePlayer)
 
-		api.GET("/players/:id", playerHandler.GetPlayer)
-		api.PUT("/players/:id", playerHandler.UpdatePlayer)
-		api.PATCH("/players/:id", playerHandler.ModifyPlayer)
-		api.DELETE("/players/:id", playerHandler.DeletePlayer)
+		auth := api.Group("", middlewares.AuthHandlerMiddleware())
+		{
+			auth.GET("/players", playerHandler.ListPlayers)
 
-		api.GET("/tournaments", controllers.ListTournaments)
-		api.POST("/tournaments", controllers.CreateTournament)
+			auth.GET("/players/:id", playerHandler.GetPlayer)
+			auth.PUT("/players/:id", playerHandler.UpdatePlayer)
+			auth.PATCH("/players/:id", playerHandler.ModifyPlayer)
+			auth.DELETE("/players/:id", playerHandler.DeletePlayer)
 
-		api.GET("/tournaments/:id", controllers.GetTournament)
-		api.PUT("/tournaments/:id", controllers.UpdateTournament)
-		api.PATCH("/tournaments/:id", controllers.ModifyTournament)
-		api.DELETE("/tournaments/:id", controllers.DeleteTournament)
+			auth.GET("/tournaments", controllers.ListTournaments)
+			auth.POST("/tournaments", controllers.CreateTournament)
+
+			auth.GET("/tournaments/:id", controllers.GetTournament)
+			auth.PUT("/tournaments/:id", controllers.UpdateTournament)
+			auth.PATCH("/tournaments/:id", controllers.ModifyTournament)
+			auth.DELETE("/tournaments/:id", controllers.DeleteTournament)
+		}
 	}
 
 	return g
