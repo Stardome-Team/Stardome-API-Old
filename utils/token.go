@@ -50,5 +50,18 @@ func GenerateToken(c *gin.Context, player *models.Player) *models.Token {
 		ExpiresOn: expiration.UnixNano(),
 		Type:      keyTokenType,
 	}
+}
 
+// VerifyToken :
+func VerifyToken(token string) error {
+
+	_jwt := jwt.NewJWT()
+
+	err := _jwt.Verify(token, configurations.JWTTokenSecretKey)
+
+	if err != nil {
+		return err
+	}
+
+	return nil
 }
