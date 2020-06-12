@@ -95,7 +95,5 @@ func HasTokenExpired(token string) bool {
 
 	expTime := int64(claimsObj["exp"].(float64))
 
-	fmt.Printf("\n\n\n Exp: %v \n\n Now: %v \n\n\n", expTime, time.Now().UnixNano())
-
 	return expTime < time.Now().UnixNano()
 }
