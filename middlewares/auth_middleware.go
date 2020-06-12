@@ -52,6 +52,25 @@ func AuthHandlerMiddleware() gin.HandlerFunc {
 						}},
 					}},
 			})
+			return
+		}
+
+		hasExpired := utils.HasTokenExpired(*token)
+
+		if hasExpired {
+			c.AbortWithStatusJSON(http.StatusUnauthorized, models.Result{
+				Error: models.Error{
+					Error: &models.ErrorObject{
+						Code:    http.StatusUnauthorized,
+						Message: utils.ErrorAuthorizationVerificationFailed.Error(),
+						Errors: []models.ErrorsObject{{
+							Domain:  c.Request.URL.Path,
+							Message: utils.ErrorAuthorizationVerificationFailed.Error(),
+							Reason:  utils.ReasonAuthorizationFailed,
+						}},
+					}},
+			})
+			return
 		}
 
 		c.Next()

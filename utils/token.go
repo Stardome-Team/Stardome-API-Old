@@ -1,6 +1,10 @@
 package utils
 
 import (
+	"encoding/base64"
+	"encoding/json"
+	"fmt"
+	"strings"
 	"time"
 
 	"github.com/Blac-Panda/Stardome-API/configurations"
@@ -64,4 +68,34 @@ func VerifyToken(token string) error {
 	}
 
 	return nil
+}
+
+// HasTokenExpired :
+func HasTokenExpired(token string) bool {
+
+	tokenArr := strings.Split(token, ".")
+
+	if len(tokenArr) != 3 {
+		return false
+	}
+
+	claimsJSON, err := base64.RawURLEncoding.DecodeString(string(tokenArr[1]))
+
+	if err != nil {
+		return false
+	}
+
+	claimsObj := make(map[string]interface{})
+
+	err = json.Unmarshal(claimsJSON, &claimsObj)
+
+	if err != nil {
+		fmt.Println(err)
+	}
+
+	expTime := int64(claimsObj["exp"].(float64))
+
+	fmt.Printf("\n\n\n Exp: %v \n\n Now: %v \n\n\n", expTime, time.Now().UnixNano())
+
+	return expTime < time.Now().UnixNano()
 }
