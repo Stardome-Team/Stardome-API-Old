@@ -11,7 +11,7 @@ var (
 
 func init() {
 
-	viper.SetConfigFile(".env")
+	viper.SetConfigFile("../.env")
 
 	err := viper.ReadInConfig()
 

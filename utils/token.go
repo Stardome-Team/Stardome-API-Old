@@ -10,7 +10,6 @@ import (
 	"github.com/Blac-Panda/Stardome-API/configurations"
 
 	"github.com/Blac-Panda/Stardome-API/models"
-	"github.com/gin-gonic/gin"
 	"github.com/jrpalma/jwt"
 )
 
@@ -25,7 +24,7 @@ const (
 )
 
 // GenerateToken :
-func GenerateToken(c *gin.Context, player *models.Player) *models.Token {
+func GenerateToken(host *string, player *models.Player) *models.Token {
 
 	token := jwt.NewJWT()
 
@@ -35,7 +34,7 @@ func GenerateToken(c *gin.Context, player *models.Player) *models.Token {
 
 	token.Claims.SetNotBefore(notBefore)
 	token.Claims.SetExpiration(expiration)
-	token.Claims.SetIssuer(c.Request.Host)
+	token.Claims.SetIssuer(*host)
 
 	token.Claims.Set(keyID, player.ID)
 	token.Claims.Set(keyUserName, player.UserName)

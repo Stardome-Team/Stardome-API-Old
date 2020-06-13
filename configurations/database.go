@@ -19,7 +19,7 @@ var (
 )
 
 func init() {
-	viper.SetConfigFile(".env")
+	viper.SetConfigFile("../.env")
 }
 
 // GetDB :
