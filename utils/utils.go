@@ -8,14 +8,6 @@ import (
 	"github.com/gin-gonic/gin"
 )
 
-// CompareStrings :
-func CompareStrings(first string, second string, err error) (bool, error) {
-	if first != second {
-		return true, nil
-	}
-	return false, err
-}
-
 // ParseQueryToInt ;
 func ParseQueryToInt(queries ...string) ([]int, *models.ErrorParsing) {
 	var list []int = make([]int, len(queries))
