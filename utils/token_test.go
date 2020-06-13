@@ -133,7 +133,6 @@ func TestHasTokenExpired(t *testing.T) {
 					t.Errorf("utils.GenerateToken. \nError: expected = %v | result = %v ", test.expected, expired)
 				}
 
-				// t.Logf("\n\n\n Token: %v \n\n\n", HasTokenExpired(*token.Token))
 			} else {
 
 				if expired := HasTokenExpired(test.token); expired != test.expected {
