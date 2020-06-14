@@ -9,6 +9,8 @@ import (
 
 func TestGenerateToken(t *testing.T) {
 
+	loadDevEnvironment()
+
 	var playerID string = "playerID"
 	var userName string = "userName"
 	var emailAddress string = "test@test.com"
@@ -65,6 +67,8 @@ func TestGenerateToken(t *testing.T) {
 
 func TestVerifyToken(t *testing.T) {
 
+	loadDevEnvironment()
+
 	tests := []struct {
 		name     string
 		token    string
@@ -100,6 +104,8 @@ func TestVerifyToken(t *testing.T) {
 }
 
 func TestHasTokenExpired(t *testing.T) {
+
+	loadDevEnvironment()
 
 	var host string = "STARDOME_TEST"
 

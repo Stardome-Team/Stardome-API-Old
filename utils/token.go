@@ -42,7 +42,7 @@ func GenerateToken(host *string, player *models.Player) *models.Token {
 	token.Claims.Set(keyAvatarURL, player.AvatarURL)
 	token.Claims.Set(keyAvatarBlurHash, player.AvatarBlurHash)
 
-	base64JWT, err := token.Sign(configurations.JWTTokenSecretKey)
+	base64JWT, err := token.Sign(configurations.GetTokenSecretKey())
 
 	if err != nil {
 		return nil
@@ -60,7 +60,7 @@ func VerifyToken(token string) error {
 
 	_jwt := jwt.NewJWT()
 
-	err := _jwt.Verify(token, configurations.JWTTokenSecretKey)
+	err := _jwt.Verify(token, configurations.GetTokenSecretKey())
 
 	if err != nil {
 		return err

@@ -18,18 +18,8 @@ var (
 	password   string
 )
 
-func init() {
-	viper.SetConfigFile("../.env")
-}
-
 // GetDB :
 func GetDB() (*gorm.DB, error) {
-	err := viper.ReadInConfig()
-
-	if err != nil {
-		// TODO: log error
-		return nil, err
-	}
 	connection = viper.GetString("DB_CONNECTION")
 	host = viper.GetString("DB_HOST")
 	port = viper.GetString("DB_PORT")
