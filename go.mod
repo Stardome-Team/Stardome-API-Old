@@ -3,7 +3,8 @@ module github.com/Blac-Panda/Stardome-API
 go 1.14
 
 require (
-	github.com/alexedwards/argon2id v0.0.0-20200420065805-90c52fcb498a
+	github.com/DATA-DOG/go-sqlmock v1.4.1
+	github.com/alexedwards/argon2id v0.0.0-20200522061839-9369edc04b05
 	github.com/fatih/structs v1.1.0
 	github.com/fsnotify/fsnotify v1.4.9 // indirect
 	github.com/gin-gonic/gin v1.6.3
@@ -11,7 +12,9 @@ require (
 	github.com/golang/protobuf v1.4.2 // indirect
 	github.com/jinzhu/gorm v1.9.12
 	github.com/jrpalma/jwt v0.0.0-20200521155824-3a427899c0b3
-	github.com/mitchellh/mapstructure v1.3.0 // indirect
+	github.com/json-iterator/go v1.1.10 // indirect
+	github.com/lib/pq v1.7.0 // indirect
+	github.com/mitchellh/mapstructure v1.3.2 // indirect
 	github.com/pelletier/go-toml v1.8.0 // indirect
 	github.com/rs/xid v1.2.1
 	github.com/spf13/afero v1.2.2 // indirect
@@ -20,7 +23,8 @@ require (
 	github.com/spf13/pflag v1.0.5 // indirect
 	github.com/spf13/viper v1.7.0
 	github.com/stoewer/go-strcase v1.2.0
-	golang.org/x/crypto v0.0.0-20200510223506-06a226fb4e37 // indirect
-	golang.org/x/sys v0.0.0-20200519105757-fe76b779f299 // indirect
-	gopkg.in/ini.v1 v1.56.0 // indirect
+	golang.org/x/crypto v0.0.0-20200604202706-70a84ac30bf9 // indirect
+	golang.org/x/sys v0.0.0-20200610111108-226ff32320da // indirect
+	google.golang.org/protobuf v1.24.0 // indirect
+	gopkg.in/ini.v1 v1.57.0 // indirect
 )

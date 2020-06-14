@@ -4,7 +4,7 @@ import (
 	"github.com/Blac-Panda/Stardome-API/configurations"
 	"github.com/Blac-Panda/Stardome-API/controllers"
 	"github.com/Blac-Panda/Stardome-API/middlewares"
-	"github.com/Blac-Panda/Stardome-API/repositories/database"
+	"github.com/Blac-Panda/Stardome-API/repositories"
 	"github.com/Blac-Panda/Stardome-API/services"
 	"github.com/gin-gonic/gin"
 	"github.com/jinzhu/gorm"
@@ -17,7 +17,7 @@ var (
 
 func init() {
 
-	playerRepository := database.NewPlayerRepository(func() *gorm.DB {
+	playerRepository := repositories.NewPlayerRepository(func() *gorm.DB {
 		db, err := configurations.GetDB()
 
 		if err != nil {
