@@ -42,8 +42,6 @@ func (r *repo) ListPlayers(index, size int) (*models.Pagination, error) {
 
 	db.Offset((index - 1) * size).Limit(size).Find(&players).Count(&count)
 
-	// db.Exec(`SELECT * FROM player WHERE "players"."deleted_at" IS NOT NULL LIMIT ? OFFSET ?`, size, (index-1)*size).Count(&count)
-
 	return &models.Pagination{
 		StartIndex:       &index,
 		ItemsPerPage:     &size,
