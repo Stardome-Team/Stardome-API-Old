@@ -221,3 +221,50 @@ func TestCreatePlayer(t *testing.T) {
 		})
 	}
 }
+
+func TestModifyPlayer(t *testing.T) {
+
+	tests := generatePlayerTests(1, "Test Modify Player")
+
+	for _, test := range tests {
+		t.Run(test.description, func(t *testing.T) {
+
+			mockDB, mock, err := sqlmock.New()
+
+			if err != nil {
+				t.Errorf("repositories.ModifyPlayer. \nError: failed to open a stud database connection | error = %v", err)
+			}
+			defer mockDB.Close()
+
+			mock.ExpectQuery(regexp.QuoteMeta(`SELECT * FROM "players"  WHERE "players"."deleted_at" IS NULL AND (( id = $1 )) ORDER BY "players"."id" ASC LIMIT 1`)).
+				WithArgs(string(*test.player.ID)).
+				WillReturnRows(mock.NewRows([]string{"id", "user_name", "pass_hash", "email", "display_name", "avatar_url", "avatar_blur_hash", "created_at", "updated_at", "deleted_at"}).
+					AddRow(test.player.ID, test.player.UserName, test.player.PassHash, test.player.EmailAddress, test.player.DisplayName, test.player.AvatarURL, test.player.AvatarBlurHash, test.player.CreatedAt, test.player.UpdatedAt, test.player.DeletedAt))
+
+			// mock.ExpectQuery(regexp.QuoteMeta(`UPDATE "players" SET "players"."diplay_name" = $1 WHERE "players"."deleted_at" IS NULL AND (( id = $2 ))`)).
+			// 	WithArgs("PLAYER_DISPLAY_NAME", string(*test.player.ID))
+
+			repo := NewPlayerRepository(func() *gorm.DB {
+
+				db, err := gorm.Open("postgres", mockDB)
+
+				if err != nil {
+					t.Errorf("repositories.ModifyPlayer. \nError: failed to open a stud database connection | error = %v", err)
+				}
+
+				return db
+			})
+
+			player, err := repo.ModifyPlayer(*test.player.ID, map[string]interface{}{})
+
+			if err != nil {
+				t.Errorf("repositories.ModifyPlayer. \nError: modify player failed | error = %v", err)
+			}
+
+			if player == nil {
+				t.Errorf("repositories.ModifyPlayer. \nError: modify player failed")
+
+			}
+		})
+	}
+}

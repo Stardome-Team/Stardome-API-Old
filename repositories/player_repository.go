@@ -153,7 +153,7 @@ func (r *repo) ModifyPlayer(id string, p map[string]interface{}) (*models.Player
 		return nil, utils.ErrorPlayerNotFound
 	}
 
-	if rows := db.Model(&models.Player{}).Omit("id", "user_name", "created_at").Updates(p).RowsAffected; rows == 0 {
+	if rows := db.Model(&models.Player{}).Omit("id", "user_name", "pass_hash", "created_at").Where(" id = ? ", id).Updates(p).RowsAffected; rows == 0 {
 		return nil, utils.ErrorPlayerUpdateFailed
 	}
 
