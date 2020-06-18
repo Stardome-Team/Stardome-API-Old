@@ -134,7 +134,7 @@ func (r *repo) UpdatePlayer(p *models.Player) (*models.Player, error) {
 
 	var player *models.Player = &models.Player{}
 
-	db.Where("id = ?", p.ID).First(&player)
+	db.Where(" id = ? ", p.ID).First(&player)
 
 	return player, nil
 }
@@ -159,7 +159,7 @@ func (r *repo) ModifyPlayer(id string, p map[string]interface{}) (*models.Player
 
 	var player *models.Player = &models.Player{}
 
-	db.Where("id = ?", id).First(&player)
+	db.Where(" id = ? ", id).First(&player)
 
 	return player, nil
 }
