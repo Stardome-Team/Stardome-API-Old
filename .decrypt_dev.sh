@@ -1,4 +1,3 @@
-#!bin/sh
 
 # Decrypt .ENVIRONMENT.env file
 
