@@ -1,3 +1,6 @@
 **.exe
 **.exe~
-.env
+.dev.env
+.prod.env
+dev_secret.txt
+prod_secret.txt

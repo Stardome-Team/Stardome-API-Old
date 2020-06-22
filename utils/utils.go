@@ -4,17 +4,11 @@ import (
 	"net/http"
 	"strconv"
 
+	"github.com/spf13/viper"
+
 	"github.com/Blac-Panda/Stardome-API/models"
 	"github.com/gin-gonic/gin"
 )
-
-// CompareStrings :
-func CompareStrings(first string, second string, err error) (bool, error) {
-	if first != second {
-		return true, nil
-	}
-	return false, err
-}
 
 // ParseQueryToInt ;
 func ParseQueryToInt(queries ...string) ([]int, *models.ErrorParsing) {
@@ -35,4 +29,9 @@ func ParseQueryToInt(queries ...string) ([]int, *models.ErrorParsing) {
 	}
 
 	return list, nil
+}
+
+func loadDevEnvironment() {
+	viper.SetConfigFile("../.dev.env")
+	viper.ReadInConfig()
 }

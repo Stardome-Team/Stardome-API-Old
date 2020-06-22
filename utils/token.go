@@ -10,7 +10,6 @@ import (
 	"github.com/Blac-Panda/Stardome-API/configurations"
 
 	"github.com/Blac-Panda/Stardome-API/models"
-	"github.com/gin-gonic/gin"
 	"github.com/jrpalma/jwt"
 )
 
@@ -25,7 +24,7 @@ const (
 )
 
 // GenerateToken :
-func GenerateToken(c *gin.Context, player *models.Player) *models.Token {
+func GenerateToken(host *string, player *models.Player) *models.Token {
 
 	token := jwt.NewJWT()
 
@@ -35,7 +34,7 @@ func GenerateToken(c *gin.Context, player *models.Player) *models.Token {
 
 	token.Claims.SetNotBefore(notBefore)
 	token.Claims.SetExpiration(expiration)
-	token.Claims.SetIssuer(c.Request.Host)
+	token.Claims.SetIssuer(*host)
 
 	token.Claims.Set(keyID, player.ID)
 	token.Claims.Set(keyUserName, player.UserName)
@@ -43,7 +42,7 @@ func GenerateToken(c *gin.Context, player *models.Player) *models.Token {
 	token.Claims.Set(keyAvatarURL, player.AvatarURL)
 	token.Claims.Set(keyAvatarBlurHash, player.AvatarBlurHash)
 
-	base64JWT, err := token.Sign(configurations.JWTTokenSecretKey)
+	base64JWT, err := token.Sign(configurations.GetTokenSecretKey())
 
 	if err != nil {
 		return nil
@@ -61,7 +60,7 @@ func VerifyToken(token string) error {
 
 	_jwt := jwt.NewJWT()
 
-	err := _jwt.Verify(token, configurations.JWTTokenSecretKey)
+	err := _jwt.Verify(token, configurations.GetTokenSecretKey())
 
 	if err != nil {
 		return err
@@ -94,8 +93,6 @@ func HasTokenExpired(token string) bool {
 	}
 
 	expTime := int64(claimsObj["exp"].(float64))
-
-	fmt.Printf("\n\n\n Exp: %v \n\n Now: %v \n\n\n", expTime, time.Now().UnixNano())
 
 	return expTime < time.Now().UnixNano()
 }

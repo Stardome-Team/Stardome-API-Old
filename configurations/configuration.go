@@ -4,20 +4,8 @@ import (
 	"github.com/spf13/viper"
 )
 
-var (
-	// JWTTokenSecretKey :
-	JWTTokenSecretKey string
-)
+// GetTokenSecretKey :
+func GetTokenSecretKey() string {
 
-func init() {
-
-	viper.SetConfigFile(".env")
-
-	err := viper.ReadInConfig()
-
-	if err != nil {
-		return
-	}
-
-	JWTTokenSecretKey = viper.GetString("JWT_SECRET_KEY")
+	return viper.GetString("JWT_SECRET_KEY")
 }

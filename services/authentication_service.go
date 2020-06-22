@@ -55,7 +55,7 @@ func (s *service) AuthenticatePlayer(c *gin.Context, pa *models.PlayerAuthentica
 		}
 	}
 
-	token := utils.GenerateToken(c, player)
+	token := utils.GenerateToken(&c.Request.Host, player)
 
 	return token, nil
 }
