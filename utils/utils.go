@@ -32,6 +32,6 @@ func ParseQueryToInt(queries ...string) ([]int, *models.ErrorParsing) {
 }
 
 func loadDevEnvironment() {
-	viper.SetConfigFile("../.env")
+	viper.SetConfigFile("../.dev.env")
 	viper.ReadInConfig()
 }
