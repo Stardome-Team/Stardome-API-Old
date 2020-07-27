@@ -4,7 +4,7 @@ import (
 	"testing"
 	"time"
 
-	"github.com/Blac-Panda/Stardome-API/models"
+	"github.com/Blac-Panda/Stardome-API/player-service/models"
 )
 
 func TestGenerateToken(t *testing.T) {

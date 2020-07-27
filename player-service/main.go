@@ -5,7 +5,7 @@ import (
 
 	"github.com/spf13/viper"
 
-	"github.com/Blac-Panda/Stardome-API/routers"
+	"github.com/Blac-Panda/Stardome-API/player-service/routers"
 	_ "github.com/jinzhu/gorm/dialects/postgres"
 )
 
@@ -15,10 +15,10 @@ func init() {
 	flag.Parse()
 
 	if *isProduction {
-		viper.SetConfigFile("../.prod.env")
+		viper.SetConfigFile("./.prod.env")
 		viper.ReadInConfig()
 	} else {
-		viper.SetConfigFile("../.dev.env")
+		viper.SetConfigFile("./.dev.env")
 		viper.ReadInConfig()
 	}
 }

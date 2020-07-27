@@ -1,11 +1,11 @@
 package routers
 
 import (
-	"github.com/Blac-Panda/Stardome-API/configurations"
-	"github.com/Blac-Panda/Stardome-API/controllers"
-	"github.com/Blac-Panda/Stardome-API/middlewares"
-	"github.com/Blac-Panda/Stardome-API/repositories"
-	"github.com/Blac-Panda/Stardome-API/services"
+	"github.com/Blac-Panda/Stardome-API/player-service/configurations"
+	"github.com/Blac-Panda/Stardome-API/player-service/controllers"
+	"github.com/Blac-Panda/Stardome-API/player-service/middlewares"
+	"github.com/Blac-Panda/Stardome-API/player-service/repositories"
+	"github.com/Blac-Panda/Stardome-API/player-service/services"
 	"github.com/gin-gonic/gin"
 	"github.com/jinzhu/gorm"
 )

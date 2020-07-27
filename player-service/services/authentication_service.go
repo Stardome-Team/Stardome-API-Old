@@ -3,9 +3,9 @@ package services
 import (
 	"net/http"
 
-	"github.com/Blac-Panda/Stardome-API/models"
-	"github.com/Blac-Panda/Stardome-API/repositories"
-	"github.com/Blac-Panda/Stardome-API/utils"
+	"github.com/Blac-Panda/Stardome-API/player-service/models"
+	"github.com/Blac-Panda/Stardome-API/player-service/repositories"
+	"github.com/Blac-Panda/Stardome-API/player-service/utils"
 	"github.com/gin-gonic/gin"
 )
 

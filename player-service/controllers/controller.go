@@ -1,7 +1,7 @@
 package controllers
 
 import (
-	"github.com/Blac-Panda/Stardome-API/services"
+	"github.com/Blac-Panda/Stardome-API/player-service/services"
 )
 
 // handler :

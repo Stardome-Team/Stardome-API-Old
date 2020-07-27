@@ -6,7 +6,7 @@ import (
 
 	"github.com/spf13/viper"
 
-	"github.com/Blac-Panda/Stardome-API/models"
+	"github.com/Blac-Panda/Stardome-API/player-service/models"
 	"github.com/gin-gonic/gin"
 )
 
