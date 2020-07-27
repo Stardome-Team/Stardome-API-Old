@@ -15,10 +15,10 @@ func init() {
 	flag.Parse()
 
 	if *isProduction {
-		viper.SetConfigFile(".dev.env")
+		viper.SetConfigFile(".prod.env")
 		viper.ReadInConfig()
 	} else {
-		viper.SetConfigFile(".prod.env")
+		viper.SetConfigFile(".dev.env")
 		viper.ReadInConfig()
 	}
 }
