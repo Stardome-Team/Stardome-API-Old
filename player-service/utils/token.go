@@ -7,9 +7,9 @@ import (
 	"strings"
 	"time"
 
-	"github.com/Blac-Panda/Stardome-API/configurations"
+	"github.com/Blac-Panda/Stardome-API/player-service/configurations"
 
-	"github.com/Blac-Panda/Stardome-API/models"
+	"github.com/Blac-Panda/Stardome-API/player-service/models"
 	"github.com/jrpalma/jwt"
 )
 

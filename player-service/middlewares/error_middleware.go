@@ -4,9 +4,9 @@ import (
 	"fmt"
 	"net/http"
 
-	"github.com/Blac-Panda/Stardome-API/utils"
+	"github.com/Blac-Panda/Stardome-API/player-service/utils"
 
-	"github.com/Blac-Panda/Stardome-API/models"
+	"github.com/Blac-Panda/Stardome-API/player-service/models"
 
 	"github.com/stoewer/go-strcase"
 

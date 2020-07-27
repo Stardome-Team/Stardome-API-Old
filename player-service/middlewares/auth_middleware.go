@@ -4,8 +4,8 @@ import (
 	"net/http"
 	"strings"
 
-	"github.com/Blac-Panda/Stardome-API/models"
-	"github.com/Blac-Panda/Stardome-API/utils"
+	"github.com/Blac-Panda/Stardome-API/player-service/models"
+	"github.com/Blac-Panda/Stardome-API/player-service/utils"
 	"github.com/gin-gonic/gin"
 )
 

@@ -3,8 +3,8 @@ package controllers
 import (
 	"net/http"
 
-	"github.com/Blac-Panda/Stardome-API/models"
-	"github.com/Blac-Panda/Stardome-API/services"
+	"github.com/Blac-Panda/Stardome-API/player-service/models"
+	"github.com/Blac-Panda/Stardome-API/player-service/services"
 	"github.com/gin-gonic/gin"
 )
 

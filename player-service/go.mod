@@ -1,7 +1,6 @@
-module github.com/Blac-Panda/Stardome-API
+module github.com/Blac-Panda/Stardome-API/player-service
 
 go 1.14
-<<<<<<< HEAD
 
 require (
 	github.com/DATA-DOG/go-sqlmock v1.4.1
@@ -31,5 +30,3 @@ require (
 	google.golang.org/protobuf v1.25.0 // indirect
 	gopkg.in/ini.v1 v1.57.0 // indirect
 )
-=======
->>>>>>> micro-split
