@@ -5,7 +5,13 @@ import (
 	"time"
 
 	"github.com/Blac-Panda/Stardome-API/player-service/models"
+	"github.com/spf13/viper"
 )
+
+func loadDevEnvironment() {
+	viper.SetConfigFile("../.dev.env")
+	viper.ReadInConfig()
+}
 
 func TestGenerateToken(t *testing.T) {
 
@@ -136,13 +142,13 @@ func TestHasTokenExpired(t *testing.T) {
 				var token *models.Token = GenerateToken(&host, &models.Player{})
 
 				if expired := HasTokenExpired(*token.Token); expired != test.expected {
-					t.Errorf("utils.GenerateToken. \nError: expected = %v | result = %v ", test.expected, expired)
+					t.Errorf("utilities.GenerateToken. \nError: expected = %v | result = %v ", test.expected, expired)
 				}
 
 			} else {
 
 				if expired := HasTokenExpired(test.token); expired != test.expected {
-					t.Errorf("utils.GenerateToken. \nError: expected = %v | result = %v ", test.expected, expired)
+					t.Errorf("utilities.GenerateToken. \nError: expected = %v | result = %v ", test.expected, expired)
 				}
 			}
 		})

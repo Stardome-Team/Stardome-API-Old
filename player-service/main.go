@@ -15,17 +15,10 @@ func init() {
 	flag.Parse()
 
 	if *isProduction {
-<<<<<<< HEAD:main.go
-		viper.SetConfigFile(".prod.env")
-		viper.ReadInConfig()
-	} else {
-		viper.SetConfigFile(".dev.env")
-=======
 		viper.SetConfigFile("./.prod.env")
 		viper.ReadInConfig()
 	} else {
 		viper.SetConfigFile("./.dev.env")
->>>>>>> micro-split:player-service/main.go
 		viper.ReadInConfig()
 	}
 }

@@ -8,6 +8,7 @@ import (
 	"time"
 
 	"github.com/Blac-Panda/Stardome-API/player-service/configurations"
+	"github.com/spf13/viper"
 
 	"github.com/Blac-Panda/Stardome-API/player-service/models"
 	"github.com/jrpalma/jwt"
@@ -60,7 +61,7 @@ func VerifyToken(token string) error {
 
 	_jwt := jwt.NewJWT()
 
-	err := _jwt.Verify(token, configurations.GetTokenSecretKey())
+	err := _jwt.Verify(token, getTokenSecretKey())
 
 	if err != nil {
 		return err
@@ -95,4 +96,8 @@ func HasTokenExpired(token string) bool {
 	expTime := int64(claimsObj["exp"].(float64))
 
 	return expTime < time.Now().UnixNano()
+}
+
+func getTokenSecretKey() string {
+	return viper.GetString("JWT_SECRET_KEY")
 }

@@ -4,8 +4,6 @@ import (
 	"net/http"
 	"strconv"
 
-	"github.com/spf13/viper"
-
 	"github.com/Blac-Panda/Stardome-API/player-service/models"
 	"github.com/gin-gonic/gin"
 )
@@ -29,9 +27,4 @@ func ParseQueryToInt(queries ...string) ([]int, *models.ErrorParsing) {
 	}
 
 	return list, nil
-}
-
-func loadDevEnvironment() {
-	viper.SetConfigFile("../.dev.env")
-	viper.ReadInConfig()
 }

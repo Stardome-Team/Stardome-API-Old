@@ -54,14 +54,6 @@ func Routers() *gin.Engine {
 			auth.PUT("/players/:id", playerHandler.UpdatePlayer)
 			auth.PATCH("/players/:id", playerHandler.ModifyPlayer)
 			auth.DELETE("/players/:id", playerHandler.DeletePlayer)
-
-			auth.GET("/tournaments", controllers.ListTournaments)
-			auth.POST("/tournaments", controllers.CreateTournament)
-
-			auth.GET("/tournaments/:id", controllers.GetTournament)
-			auth.PUT("/tournaments/:id", controllers.UpdateTournament)
-			auth.PATCH("/tournaments/:id", controllers.ModifyTournament)
-			auth.DELETE("/tournaments/:id", controllers.DeleteTournament)
 		}
 	}
 
