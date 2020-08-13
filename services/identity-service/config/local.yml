@@ -1,0 +1,8 @@
+# Database configurations
+Database:
+  engine: "postgres"
+  host: "127.0.0.1"
+  port: "5432"
+  name: "stardome_db"
+  username: "stardome_user"
+  password: "password"
