@@ -1,8 +1,8 @@
 package responses
 
-// import (
-// 	"github.com/Blac-Panda/Stardome-API/libraries/go/errors"
-// )
+import (
+	"github.com/Stardome-Team/Stardome-API/libraries/go/errors"
+)
 
 // Response This is the model for all responses returned
 type Response struct {
@@ -12,7 +12,7 @@ type Response struct {
 	Method     *string                `json:"method,omitempty"`
 	Params     map[string]interface{} `json:"params,omitempty"`
 	Data
-	// errors.Error
+	errors.Error
 }
 
 // Data is the model for all data returned

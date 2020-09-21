@@ -5,7 +5,7 @@ import (
 
 	"github.com/spf13/viper"
 
-	"github.com/Blac-Panda/Stardome-API/services/player-service/routers"
+	"github.com/Stardome-Team/Stardome-API/services/player-service/routers"
 	_ "github.com/jinzhu/gorm/dialects/postgres"
 )
 

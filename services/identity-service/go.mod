@@ -1,14 +1,14 @@
-module github.com/Blac-Panda/Stardome-API/services/identity-service
+module github.com/Stardome-Team/Stardome-API/services/identity-service
 
 go 1.14
 
-replace github.com/Blac-Panda/Stardome-API/libraries/go/errors => ../../libraries/go/errors
+replace github.com/Stardome-Team/Stardome-API/libraries/go/errors => ../../libraries/go/errors
 
-replace github.com/Blac-Panda/Stardome-API/libraries/go/responses => ../../libraries/go/responses
+replace github.com/Stardome-Team/Stardome-API/libraries/go/responses => ../../libraries/go/responses
 
 require (
-	github.com/Blac-Panda/Stardome-API/libraries/go/errors v0.0.0
-	github.com/Blac-Panda/Stardome-API/libraries/go/responses v0.0.0
+	github.com/Stardome-Team/Stardome-API/libraries/go/errors v0.0.0
+	github.com/Stardome-Team/Stardome-API/libraries/go/responses v0.0.0
 	github.com/gin-gonic/gin v1.6.3
 	github.com/go-playground/validator/v10 v10.3.0
 	github.com/google/uuid v1.1.2

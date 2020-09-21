@@ -6,8 +6,8 @@ import (
 	"testing"
 	"time"
 
-	"github.com/Blac-Panda/Stardome-API/services/player-service/models"
 	"github.com/DATA-DOG/go-sqlmock"
+	"github.com/Stardome-Team/Stardome-API/services/player-service/models"
 	"github.com/jinzhu/gorm"
 )
 

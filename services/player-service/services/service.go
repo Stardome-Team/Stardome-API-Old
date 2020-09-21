@@ -1,6 +1,6 @@
 package services
 
-import "github.com/Blac-Panda/Stardome-API/services/player-service/repositories"
+import "github.com/Stardome-Team/Stardome-API/services/player-service/repositories"
 
 type service struct {
 	playerRepository repositories.PlayerRepository

@@ -8,15 +8,15 @@ import (
 	"os/signal"
 	"time"
 
-	"github.com/Blac-Panda/Stardome-API/services/identity-service/internal/errors"
+	"github.com/Stardome-Team/Stardome-API/services/identity-service/internal/errors"
 
 	"github.com/gin-gonic/gin"
 
-	"github.com/Blac-Panda/Stardome-API/services/identity-service/pkg/database"
+	"github.com/Stardome-Team/Stardome-API/services/identity-service/pkg/database"
 
-	"github.com/Blac-Panda/Stardome-API/services/identity-service/internal/auth"
-	"github.com/Blac-Panda/Stardome-API/services/identity-service/internal/config"
-	"github.com/Blac-Panda/Stardome-API/services/identity-service/pkg/log"
+	"github.com/Stardome-Team/Stardome-API/services/identity-service/internal/auth"
+	"github.com/Stardome-Team/Stardome-API/services/identity-service/internal/config"
+	"github.com/Stardome-Team/Stardome-API/services/identity-service/pkg/log"
 
 	_ "github.com/lib/pq"
 )

@@ -1,4 +1,4 @@
-module github.com/Blac-Panda/Stardome-API/libraries/go/errors
+module github.com/Stardome-Team/Stardome-API/libraries/go/errors
 
 go 1.14
 

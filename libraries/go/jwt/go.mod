@@ -1,4 +1,4 @@
-module github.com/Blac-Panda/Stardome-API/libraries/go/jwt
+module github.com/Stardome-Team/Stardome-API/libraries/go/jwt
 
 go 1.14
 

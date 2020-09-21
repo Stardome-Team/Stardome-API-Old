@@ -4,9 +4,9 @@ import (
 	"net/http"
 	"time"
 
-	"github.com/Blac-Panda/Stardome-API/services/player-service/models"
-	"github.com/Blac-Panda/Stardome-API/services/player-service/repositories"
-	"github.com/Blac-Panda/Stardome-API/services/player-service/utils"
+	"github.com/Stardome-Team/Stardome-API/services/player-service/models"
+	"github.com/Stardome-Team/Stardome-API/services/player-service/repositories"
+	"github.com/Stardome-Team/Stardome-API/services/player-service/utils"
 	"github.com/gin-gonic/gin"
 	"github.com/rs/xid"
 )
