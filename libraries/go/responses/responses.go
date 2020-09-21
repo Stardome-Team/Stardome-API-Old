@@ -1,8 +1,6 @@
 package responses
 
-import (
-	"github.com/Stardome-Team/Stardome-API/libraries/go/errors"
-)
+import "github.com/Stardome-Team/Stardome-API/libraries/go/errors"
 
 // Response This is the model for all responses returned
 type Response struct {
