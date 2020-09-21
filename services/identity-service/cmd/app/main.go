@@ -8,6 +8,8 @@ import (
 	"os/signal"
 	"time"
 
+	"github.com/Blac-Panda/Stardome-API/services/identity-service/internal/errors"
+
 	"github.com/gin-gonic/gin"
 
 	"github.com/Blac-Panda/Stardome-API/services/identity-service/pkg/database"
@@ -71,6 +73,8 @@ func main() {
 
 func buildHandler(cfg *config.Config, db *database.DB, logger log.Logger) *gin.Engine {
 	router := gin.Default()
+
+	router.Use(errors.ErrorHandlerMiddleware())
 
 	group := router.Group("/api")
 

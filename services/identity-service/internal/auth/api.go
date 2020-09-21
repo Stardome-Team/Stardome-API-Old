@@ -6,23 +6,23 @@ import (
 )
 
 const (
-	authorizationEndpoint = "/authorize"
+	authorizationEndpoint = "/auth/player"
 )
 
-// Request request model sent to authenticate players
-type Request struct {
-	UserName string
-	Password string
+type handler struct {
+	service Service
+	logger  log.Logger
+}
+
+// AuthenticationRequest request model sent to authenticate players
+type AuthenticationRequest struct {
+	UserName string `json:"username" binding:"required"`
+	Password string `json:"password" binding:"required"`
 }
 
 // Controller contains interface for authentication handlers
 type Controller interface {
 	AuthorizeUser(c *gin.Context)
-}
-
-type handler struct {
-	service Service
-	logger  log.Logger
 }
 
 // CreateHandlers sets up routing to the HTTP request
@@ -38,7 +38,12 @@ func registerHandlers(r *gin.RouterGroup, ctr Controller) {
 
 // AuthorizeUser handler function to authorize the user
 func (h *handler) AuthorizeUser(c *gin.Context) {
-	c.JSON(200, map[string]interface{}{"hello": "world"})
 
-	return
+	var request AuthenticationRequest
+
+	if err := c.BindJSON(&request); err != nil {
+		h.logger.Errorf("invalid request: %v", err)
+		return
+	}
+
 }
