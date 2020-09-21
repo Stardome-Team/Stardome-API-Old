@@ -3,7 +3,7 @@ package database
 import (
 	"fmt"
 
-	"github.com/Blac-Panda/Stardome-API/services/identity-service/internal/config"
+	"github.com/Stardome-Team/Stardome-API/services/identity-service/internal/config"
 	"gorm.io/driver/postgres"
 	"gorm.io/gorm"
 )

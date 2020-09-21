@@ -1,7 +1,7 @@
 package router
 
 import (
-	"github.com/Blac-Panda/Stardome-API/services/tournament-service/controllers"
+	"github.com/Stardome-Team/Stardome-API/services/tournament-service/controllers"
 	"github.com/gin-gonic/gin"
 )
 

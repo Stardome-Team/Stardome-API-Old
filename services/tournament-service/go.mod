@@ -1,4 +1,4 @@
-module github.com/Blac-Panda/Stardome-API/services/tournament-service
+module github.com/Stardome-Team/Stardome-API/services/tournament-service
 
 go 1.14
 

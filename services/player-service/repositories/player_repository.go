@@ -1,8 +1,8 @@
 package repositories
 
 import (
-	"github.com/Blac-Panda/Stardome-API/services/player-service/models"
-	"github.com/Blac-Panda/Stardome-API/services/player-service/utils"
+	"github.com/Stardome-Team/Stardome-API/services/player-service/models"
+	"github.com/Stardome-Team/Stardome-API/services/player-service/utils"
 	"github.com/fatih/structs"
 	"github.com/jinzhu/gorm"
 )

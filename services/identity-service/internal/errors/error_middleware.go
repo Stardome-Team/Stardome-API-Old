@@ -11,8 +11,8 @@ import (
 
 	"github.com/gin-gonic/gin"
 
-	"github.com/Blac-Panda/Stardome-API/libraries/go/errors"
-	"github.com/Blac-Panda/Stardome-API/libraries/go/responses"
+	"github.com/Stardome-Team/Stardome-API/libraries/go/errors"
+	"github.com/Stardome-Team/Stardome-API/libraries/go/responses"
 )
 
 // ErrorHandlerMiddleware :

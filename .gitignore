@@ -4,3 +4,5 @@
 .prod.env
 dev_secret.txt
 prod_secret.txt
+**/vendor
+**.dot

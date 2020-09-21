@@ -1,7 +1,7 @@
 package auth
 
 import (
-	"github.com/Blac-Panda/Stardome-API/services/identity-service/pkg/log"
+	"github.com/Stardome-Team/Stardome-API/services/identity-service/pkg/log"
 	"github.com/gin-gonic/gin"
 )
 
